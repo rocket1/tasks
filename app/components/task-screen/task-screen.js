@@ -1,10 +1,11 @@
 import React from 'react';
 import {StyleSheet, View, Text, Button} from 'react-native';
+import TaskList from '../task-list/task-list';
 
 class TaskScreen extends React.Component {
 
     static navigationOptions = {
-        title: 'Tasks',
+        title: 'Taskss',
     };
 
     render() {
@@ -14,6 +15,7 @@ class TaskScreen extends React.Component {
         return (
             <View style={styles.container}>
                 <Text>This is a list of tasks</Text>
+                <TaskList data={[{key: 'a'}, {key: 'b'}]}/>
                 <Button
                     onPress={() => navigate('Map')}
                     title="Go to Map"
