@@ -1,13 +1,18 @@
 import React from 'react';
-import {StyleSheet, View, Text, Button} from 'react-native';
+import {StyleSheet, View, Text} from 'react-native';
 import TaskList from '../task-list/task-list';
+import {connect} from "react-redux";
 
-class TaskScreen extends React.Component {
+class ConnectedTaskScreen extends React.Component {
 
     static navigationOptions = {
-        title: 'Taskss',
+        title: 'Tasks',
     };
 
+    /**
+     *
+     * @returns {XML}
+     */
     render() {
 
         const {navigate} = this.props.navigation;
@@ -15,11 +20,7 @@ class TaskScreen extends React.Component {
         return (
             <View style={styles.container}>
                 <Text>This is a list of tasks</Text>
-                <TaskList data={[{key: 'a'}, {key: 'b'}]}/>
-                <Button
-                    onPress={() => navigate('Map')}
-                    title="Go to Map"
-                />
+                <TaskList navigate={navigate} tasks={this.props.tasks}/>
             </View>
         );
     }
@@ -33,6 +34,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
 });
+
+const mapStateToProps = state => {
+    return {tasks: state.tasks};
+};
+
+const TaskScreen = connect(mapStateToProps)(ConnectedTaskScreen);
 
 export default TaskScreen;
 

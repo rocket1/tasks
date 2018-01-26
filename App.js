@@ -1,15 +1,26 @@
 import React from 'react';
+import {Provider} from 'react-redux';
+import store from './app/redux/store';
 import {StackNavigator} from 'react-navigation';
 import TaskScreen from "./app/components/task-screen/task-screen";
 import MapScreen from "./app/components/map-screen/map-screen";
 
-const SimpleApp = StackNavigator({
+const Navigator = StackNavigator({
     Tasks: {screen: TaskScreen},
     Map: {screen: MapScreen}
 });
 
 export default class App extends React.Component {
+
+    /**
+     *
+     * @returns {XML}
+     */
     render() {
-        return <SimpleApp/>;
+        return (
+            <Provider store={store}>
+                <Navigator/>
+            </Provider>
+        );
     }
 }

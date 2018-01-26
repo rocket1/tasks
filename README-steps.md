@@ -11,3 +11,11 @@ yarn add react-navigation
 create 'app' directory
 
 create components in new app directory
+
+yarn add proptypes
+
+yarn add redux (and react-redux)
+
+npm install -g typescript
+
+yarn add @types/react-native @types/react

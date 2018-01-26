@@ -1,12 +1,21 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {StyleSheet, View, Text, Button, TouchableOpacity} from 'react-native';
 
 class TaskListItem extends React.PureComponent {
 
+    /**
+     *
+     * @private
+     */
     _onPress = () => {
-        this.props.onPressItem(this.props.key);
+        this.props.onPressItem(this.props);
     };
 
+    /**
+     *
+     * @returns {XML}
+     */
     render() {
 
         return (
@@ -20,6 +29,10 @@ class TaskListItem extends React.PureComponent {
         );
     }
 }
+
+TaskListItem.propTypes = {
+    onPressItem: PropTypes.func
+};
 
 export default TaskListItem;
 

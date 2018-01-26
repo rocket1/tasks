@@ -1,50 +1,48 @@
 import React from 'react';
-import {StyleSheet, View, Text, Button, FlatList} from 'react-native';
+import {FlatList} from 'react-native';
 import TaskListItem from './task-list-item';
 
 class TaskList extends React.PureComponent {
 
-    state = {
-        selected: (new Map(): Map<string, boolean>)
-    };
-
+    /**
+     *
+     * @param item
+     * @param index
+     * @private
+     */
     _keyExtractor = (item, index) => item.id;
 
+    /**
+     *
+     * @param id
+     * @private
+     */
     _onPressItem = (id: string) => {
-        // // updater functions are preferred for transactional updates
-        // this.setState((state) => {
-        //     // copy the map rather than modifying state.
-        //     const selected = new Map(state.selected);
-        //     selected.set(id, !selected.get(id)); // toggle
-        //     return {selected};
-        // });
+        this.props.navigate('Map');
     };
 
+    /**
+     *
+     * @param item
+     * @private
+     */
     _renderItem = ({item}) => (
         <TaskListItem
-            key={item.id}
             id={item.id}
             onPressItem={this._onPressItem}
             title={item.title}
         />
     );
 
+    /**
+     *
+     * @returns {XML}
+     */
     render() {
-
-        const data = [
-            {
-                id: '1',
-                title: 'Task 1'
-            }, {
-                id: '2',
-                title: 'Task 2'
-            }
-        ];
 
         return (
             <FlatList
-                key={"foo"}
-                data={data}
+                data={this.props.tasks}
                 extraData={this.state}
                 keyExtractor={this._keyExtractor}
                 renderItem={this._renderItem}
