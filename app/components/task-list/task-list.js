@@ -14,32 +14,16 @@ class TaskList extends React.PureComponent {
 
     /**
      *
-     * @param id
+     * @param task
      * @private
      */
-    _onPressItem = (id: string) => {
-        this.props.navigate('Map');
-    };
-
-    /**
-     *
-     * @param item
-     * @private
-     */
-    _renderItem = ({item}) => (
-        <TaskListItem
-            id={item.id}
-            onPressItem={this._onPressItem}
-            title={item.title}
-        />
-    );
+    _renderItem = ({item}) => <TaskListItem {...item} onSelectTask={this.props.onSelectTask}/>;
 
     /**
      *
      * @returns {XML}
      */
     render() {
-
         return (
             <FlatList
                 data={this.props.tasks}

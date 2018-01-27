@@ -8,8 +8,8 @@ class TaskListItem extends React.PureComponent {
      *
      * @private
      */
-    _onPress = () => {
-        this.props.onPressItem(this.props);
+    _onSelectTask = () => {
+        this.props.onSelectTask(this.props.id);
     };
 
     /**
@@ -19,7 +19,7 @@ class TaskListItem extends React.PureComponent {
     render() {
 
         return (
-            <TouchableOpacity onPress={this._onPress}>
+            <TouchableOpacity onPress={this._onSelectTask} style={styles.taskListItem}>
                 <View>
                     <Text>
                         {this.props.title}
@@ -31,8 +31,23 @@ class TaskListItem extends React.PureComponent {
 }
 
 TaskListItem.propTypes = {
-    onPressItem: PropTypes.func
+    onSelectTask: PropTypes.func,
+    title: PropTypes.string,
+    id: PropTypes.string
 };
+
+const styles = StyleSheet.create({
+    taskListItem: {
+        flex: 1,
+        backgroundColor: '#ffffff',
+        height: 48,
+        marginTop: 1,
+        padding: 3,
+        alignItems: 'flex-start',
+        justifyContent: 'center'
+    },
+
+});
 
 export default TaskListItem;
 

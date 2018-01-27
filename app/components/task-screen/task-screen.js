@@ -1,7 +1,8 @@
 import React from 'react';
 import {StyleSheet, View, Text} from 'react-native';
 import TaskList from '../task-list/task-list';
-import {connect} from "react-redux";
+import {connect} from 'react-redux';
+import {loadTask} from '../../redux/actions';
 
 class ConnectedTaskScreen extends React.Component {
 
@@ -11,16 +12,22 @@ class ConnectedTaskScreen extends React.Component {
 
     /**
      *
+     * @param taskId
+     * @private
+     */
+    _onSelectTask = (taskId) => {
+        this.props.loadTask(taskId);
+        this.props.navigation.navigate('Map');
+    };
+
+    /**
+     *
      * @returns {XML}
      */
     render() {
-
-        const {navigate} = this.props.navigation;
-
         return (
             <View style={styles.container}>
-                <Text>This is a list of tasks</Text>
-                <TaskList navigate={navigate} tasks={this.props.tasks}/>
+                <TaskList onSelectTask={this._onSelectTask} tasks={this.props.tasks}/>
             </View>
         );
     }
@@ -29,17 +36,23 @@ class ConnectedTaskScreen extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
+        backgroundColor: '#dddddd',
     },
 });
 
 const mapStateToProps = state => {
-    return {tasks: state.tasks};
+    return {
+        tasks: state.tasks
+    };
 };
 
-const TaskScreen = connect(mapStateToProps)(ConnectedTaskScreen);
+const mapDispatchToProps = dispatch => {
+    return {
+        loadTask: task => dispatch(loadTask(task))
+    };
+};
+
+const TaskScreen = connect(mapStateToProps, mapDispatchToProps)(ConnectedTaskScreen);
 
 export default TaskScreen;
 
