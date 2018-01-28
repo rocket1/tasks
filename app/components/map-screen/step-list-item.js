@@ -1,16 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {StyleSheet, View, Text, Button, TouchableOpacity} from 'react-native';
-import {LIST_ITEM_HEIGHT, LIST_ITEM_BG_COLOR} from '../common/styles-common';
+import {LIST_ITEM_BG_COLOR, LIST_ITEM_HEIGHT, TEXT_COLOR_2} from "../common/styles-common";
 
-class TaskListItem extends React.PureComponent {
+class StepListItem extends React.PureComponent {
 
     /**
      *
      * @private
      */
-    _onSelectTask = () => {
-        this.props.onSelectTask(this.props.id);
+    _onSelectStep = () => {
+        // this.props.onSelectTask(this.props.id);
     };
 
     /**
@@ -20,9 +20,9 @@ class TaskListItem extends React.PureComponent {
     render() {
 
         return (
-            <TouchableOpacity onPress={this._onSelectTask} style={styles.taskListItem}>
+            <TouchableOpacity onPress={this._onSelectStep} style={styles.stepListItem}>
                 <View>
-                    <Text>
+                    <Text style={styles.title}>
                         {this.props.title}
                     </Text>
                 </View>
@@ -31,14 +31,14 @@ class TaskListItem extends React.PureComponent {
     }
 }
 
-TaskListItem.propTypes = {
+StepListItem.propTypes = {
     onSelectTask: PropTypes.func,
     title: PropTypes.string,
     id: PropTypes.string
 };
 
 const styles = StyleSheet.create({
-    taskListItem: {
+    stepListItem: {
         flex: 1,
         backgroundColor: LIST_ITEM_BG_COLOR,
         height: LIST_ITEM_HEIGHT,
@@ -47,8 +47,10 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
         justifyContent: 'center'
     },
-
+    title: {
+        color: TEXT_COLOR_2,
+    }
 });
 
-export default TaskListItem;
+export default StepListItem;
 

@@ -3,11 +3,21 @@
   "tasks": [
     {
       "id": "1",
-      "title": "Task Something"
+      "title": "Task 1",
+      "steps": [
+        {
+          "id": "1",
+          "title": "Step 1"
+        },
+        {
+          "id": "2",
+          "title": "Step 2"
+        }
+      ]
     },
     {
       "id": "2",
-      "title": "Task 22"
+      "title": "Task 2"
     },
     {
       "id": "3",

@@ -3,6 +3,7 @@ import {StyleSheet, View, Text} from 'react-native';
 import TaskList from '../task-list/task-list';
 import {connect} from 'react-redux';
 import {loadTask} from '../../redux/actions';
+import {BG_COLOR} from '../common/styles-common';
 
 class ConnectedTaskScreen extends React.Component {
 
@@ -36,7 +37,7 @@ class ConnectedTaskScreen extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#dddddd',
+        backgroundColor: BG_COLOR,
     },
 });
 
