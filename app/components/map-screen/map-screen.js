@@ -171,6 +171,10 @@ class ConnectedMapScreen extends React.Component {
                     </MapView>
 
                     <View style={styles.info}>
+
+                        <View style={styles.taskHeader}><Text
+                            style={styles.taskHeaderTitle}>{this._task.description}</Text></View>
+
                         <StepList steps={this._task.steps} onSelectStep={this._onSelectStep}/>
                     </View>
 

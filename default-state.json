@@ -4,6 +4,8 @@
     {
       "id": "1",
       "title": "Mt. Tabor Climb",
+      "description": "To complete this task, visit all the places in order.",
+      "points": 100,
       "steps": [
         {
           "id": "1",
