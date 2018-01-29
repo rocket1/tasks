@@ -4,7 +4,9 @@ import {View, Text} from 'react-native';
 import {connect} from 'react-redux';
 import StepList from './step-list';
 import LocationService from '../location-service/location-service';
+import LocationPoll from '../location-service/location-poll';
 import styles from './map-screen-styles';
+import {updateLocation} from '../../redux/actions';
 
 class ConnectedMapScreen extends React.Component {
 
@@ -28,7 +30,9 @@ class ConnectedMapScreen extends React.Component {
      * @param props
      */
     constructor(props) {
+
         super(props);
+
         this._setInitRegion = this._setInitRegion.bind(this);
         this._onMapReady = this._onMapReady.bind(this);
         this._setRegion = this._setRegion.bind(this);
@@ -36,6 +40,7 @@ class ConnectedMapScreen extends React.Component {
         this._onRegionChange = this._onRegionChange.bind(this);
         this._task = this.props.loadedTask;
         this._locService = new LocationService;
+        this._locPoll = new LocationPoll();
     }
 
     /**
@@ -43,7 +48,27 @@ class ConnectedMapScreen extends React.Component {
      */
     componentDidMount() {
         this._setInitRegion();
+        this._startLocationPoll();
         console.log('componentDidMount');
+    }
+
+    /**
+     *
+     */
+    componentWillUnmount() {
+        this._locPoll.stopPoll();
+        console.log('componentDidUnmount');
+    }
+
+    /**
+     *
+     * @private
+     */
+    _startLocationPoll() {
+        this._locPoll.startPoll((location) => {
+            console.log(location);
+            this.props.updateLocation(location);
+        });
     }
 
     /**
@@ -193,7 +218,13 @@ const mapStateToProps = state => {
     };
 };
 
-const MapScreen = connect(mapStateToProps)(ConnectedMapScreen);
+const mapDispatchToProps = dispatch => {
+    return {
+        updateLocation: location => dispatch(updateLocation(location))
+    };
+};
+
+const MapScreen = connect(mapStateToProps, mapDispatchToProps)(ConnectedMapScreen);
 
 export default MapScreen;
 

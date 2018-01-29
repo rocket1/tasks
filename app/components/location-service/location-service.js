@@ -5,7 +5,7 @@ class LocationService {
      */
     _getLocation(callback) {
         if ("geolocation" in navigator) {
-            return navigator.geolocation.getCurrentPosition((location) => {
+            navigator.geolocation.getCurrentPosition((location) => {
                 if ("coords" in location) {
                     callback(location);
                 }
