@@ -8,9 +8,13 @@ import styles from './map-screen-styles';
 
 class ConnectedMapScreen extends React.Component {
 
-    static navigationOptions = {
-        title: 'Map',
-    };
+    // static navigationOptions = {
+    //     title: 'Map',
+    // };
+
+    static navigationOptions = ({navigation}) => ({
+        title: navigation.state.params.title,
+    });
 
     state = {
         region: null,
@@ -120,10 +124,13 @@ class ConnectedMapScreen extends React.Component {
     _onLayout = () => {
         console.log('onLayout');
         // console.log('ref? ' , this._ref);
-        this._ref.fitToSuppliedMarkers(
-            this.state.markers,
-            false, // not animated
-        );
+        setTimeout(() => {
+            // console.log('fitting?');
+            // this._ref.fitToSuppliedMarkers(
+            //     this.state.markers,
+            //     false, // not animated
+            // );
+        }, 2000);
     };
 
     _onSelectStep = () => {
@@ -164,10 +171,6 @@ class ConnectedMapScreen extends React.Component {
                     </MapView>
 
                     <View style={styles.info}>
-
-                        <View style={styles.taskHeader}><Text
-                            style={styles.taskHeaderTitle}>{this._task.title}</Text></View>
-
                         <StepList steps={this._task.steps} onSelectStep={this._onSelectStep}/>
                     </View>
 

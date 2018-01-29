@@ -18,7 +18,8 @@ class ConnectedTaskScreen extends React.Component {
      */
     _onSelectTask = (taskId) => {
         this.props.loadTask(taskId);
-        this.props.navigation.navigate('Map');
+        const title = this.props.tasks.find((task) => task.id === taskId).title;
+        this.props.navigation.navigate('Map', {title: title});
     };
 
     /**
@@ -43,13 +44,14 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
-        tasks: state.tasks
+        tasks: state.tasks,
+        loadedTask: state.loadedTask
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        loadTask: task => dispatch(loadTask(task))
+        loadTask: taskId => dispatch(loadTask(taskId))
     };
 };
 

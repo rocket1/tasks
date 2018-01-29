@@ -8,7 +8,7 @@
         {
           "id": "1",
           "marker": {
-            "title": "Tabor Stairs",
+            "title": "Bottom of Mt. Tabor Stairs",
             "pinColor": "#ff0000",
             "taskId": "1",
             "coordinate": {
@@ -20,7 +20,7 @@
         {
           "id": "2",
           "marker": {
-            "title": "Top of Tabor Stairs",
+            "title": "Top of Mt. Tabor Stairs",
             "pinColor": "#00ff00",
             "taskId": "1",
             "coordinate": {
@@ -32,7 +32,7 @@
         {
           "id": "3",
           "marker": {
-            "title": "Far side of Tabor track",
+            "title": "Far side of Mt. Tabor track",
             "pinColor": "#0000ff",
             "taskId": "1",
             "coordinate": {
