@@ -23,6 +23,7 @@ class ConnectedMapScreen extends React.Component {
     };
 
     _ref;
+    _isMounted;
 
     /**
      *
@@ -47,6 +48,7 @@ class ConnectedMapScreen extends React.Component {
      *
      */
     componentDidMount() {
+        this._isMounted = true;
         this._setTaskMarkers();
         this._setInitRegion();
         this._startLocationPoll();
@@ -58,7 +60,8 @@ class ConnectedMapScreen extends React.Component {
      */
     componentWillUnmount() {
         this._locService.stopPoll();
-        console.log('componentDidUnmount');
+        this._isMounted = false;
+        console.log('componentWillUnmount');
     }
 
     /**
@@ -66,19 +69,23 @@ class ConnectedMapScreen extends React.Component {
      * @private
      */
     _startLocationPoll() {
+
         this._locService.startPoll((marker) => {
 
-            const myMarker = {
-                'title': 'My Location',
-                'pinColor': '#ffff00',
-                'coordinate': {
-                    'longitude': marker.coords.longitude,
-                    'latitude': marker.coords.latitude,
-                }
-            };
+            if (this._isMounted) {
 
-            console.log('myMarker:', myMarker);
-            this._setMyMarker(myMarker);
+                const myMarker = {
+                    'title': 'My Location',
+                    'pinColor': '#ffff00',
+                    'coordinate': {
+                        'longitude': marker.coords.longitude,
+                        'latitude': marker.coords.latitude,
+                    }
+                };
+
+                console.log('myMarker:', myMarker);
+                this._setMyMarker(myMarker);
+            }
         });
     }
 

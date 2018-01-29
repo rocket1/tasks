@@ -96,8 +96,8 @@ class LocationService {
      *
      */
     stopPoll() {
-        if (this._killFunc) {
-            this._killFunc();
+        if (this._killFunc && 'remove' in this._killFunc) {
+            this._killFunc.remove();
         }
     }
 }
