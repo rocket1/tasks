@@ -9,8 +9,3 @@ export const loadTask = taskId => ({
     type: LOAD_TASK,
     payload: taskId
 });
-
-export const updateLocation = location => ({
-    type: UPDATE_LOCATION,
-    payload: location
-});

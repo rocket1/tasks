@@ -28,13 +28,6 @@ const loadTaskReducer = (state, action) => {
  *
  * @param state
  * @param action
- */
-const updateLocationReducer = (state, action) => ({...state, location: action.payload});
-
-/**
- *
- * @param state
- * @param action
  * @returns {{tasks: (null|null)[]}}
  */
 const rootReducer = (state = defaultState, action) => {
@@ -43,8 +36,6 @@ const rootReducer = (state = defaultState, action) => {
             return addTaskReducer(state, action);
         case LOAD_TASK:
             return loadTaskReducer(state, action);
-        case UPDATE_LOCATION:
-            return updateLocationReducer(state, action);
         default:
             return state;
     }

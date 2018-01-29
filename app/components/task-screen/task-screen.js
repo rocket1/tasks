@@ -7,6 +7,10 @@ import {BG_COLOR} from '../common/styles-common';
 
 class ConnectedTaskScreen extends React.Component {
 
+    /**
+     * Used by react-navigation
+     * @param navigation
+     */
     static navigationOptions = {
         title: 'Tasks',
     };

@@ -4,23 +4,22 @@ import {View, Text} from 'react-native';
 import {connect} from 'react-redux';
 import StepList from './step-list';
 import LocationService from '../location-service/location-service';
-import LocationPoll from '../location-service/location-poll';
 import styles from './map-screen-styles';
-import {updateLocation} from '../../redux/actions';
 
 class ConnectedMapScreen extends React.Component {
 
-    // static navigationOptions = {
-    //     title: 'Map',
-    // };
-
+    /**
+     * Used by react-navigation
+     * @param navigation
+     */
     static navigationOptions = ({navigation}) => ({
         title: navigation.state.params.title,
     });
 
     state = {
         region: null,
-        markers: []
+        markers: [],
+        myMarker: null
     };
 
     _ref;
@@ -33,20 +32,22 @@ class ConnectedMapScreen extends React.Component {
 
         super(props);
 
+        this._task = this.props.loadedTask;
+
         this._setInitRegion = this._setInitRegion.bind(this);
         this._onMapReady = this._onMapReady.bind(this);
         this._setRegion = this._setRegion.bind(this);
-        this._setMarkers = this._setMarkers.bind(this);
+        this._setTaskMarkers = this._setTaskMarkers.bind(this);
         this._onRegionChange = this._onRegionChange.bind(this);
-        this._task = this.props.loadedTask;
+
         this._locService = new LocationService;
-        this._locPoll = new LocationPoll();
     }
 
     /**
      *
      */
     componentDidMount() {
+        this._setTaskMarkers();
         this._setInitRegion();
         this._startLocationPoll();
         console.log('componentDidMount');
@@ -56,7 +57,7 @@ class ConnectedMapScreen extends React.Component {
      *
      */
     componentWillUnmount() {
-        this._locPoll.stopPoll();
+        this._locService.stopPoll();
         console.log('componentDidUnmount');
     }
 
@@ -65,9 +66,19 @@ class ConnectedMapScreen extends React.Component {
      * @private
      */
     _startLocationPoll() {
-        this._locPoll.startPoll((location) => {
-            console.log(location);
-            this.props.updateLocation(location);
+        this._locService.startPoll((marker) => {
+
+            const myMarker = {
+                'title': 'My Location',
+                'pinColor': '#ffff00',
+                'coordinate': {
+                    'longitude': marker.coords.longitude,
+                    'latitude': marker.coords.latitude,
+                }
+            };
+
+            console.log('myMarker:', myMarker);
+            this._setMyMarker(myMarker);
         });
     }
 
@@ -95,9 +106,20 @@ class ConnectedMapScreen extends React.Component {
      *
      * @private
      */
-    _setMarkers(markers) {
+    _setTaskMarkers() {
+
+        const markers = this._task.steps.map((step) => {
+            return step.marker;
+        });
+
         this.setState({
             markers: markers
+        });
+    }
+
+    _setMyMarker(marker) {
+        this.setState({
+            myMarker: marker
         });
     }
 
@@ -107,9 +129,14 @@ class ConnectedMapScreen extends React.Component {
      * @private
      */
     _addMarker(marker) {
-
         this.setState({
             markers: [...this.state.markers, marker]
+        });
+    }
+
+    _removeMarker(marker) {
+        this.setState({
+            markers: this.state.markers.splice(1, 1)
         });
     }
 
@@ -121,11 +148,6 @@ class ConnectedMapScreen extends React.Component {
         this._locService.getCurrentRegion((region) => {
             this._locService.getCurrentMarker((marker) => {
                 this._setRegion(region);
-                const markers = this._task.steps.map((step) => {
-                    return step.marker;
-                });
-                this._setMarkers(markers);
-                this._addMarker(marker);
             })
         });
     };
@@ -135,7 +157,6 @@ class ConnectedMapScreen extends React.Component {
      * @param region
      */
     _onRegionChange = (region) => {
-        // this._setRegion(location);
         console.log('onRegionChange');
     };
 
@@ -170,6 +191,12 @@ class ConnectedMapScreen extends React.Component {
 
         if (this.state.region) {
 
+            const myMarker = this.state.myMarker ? <MapView.Marker
+                coordinate={this.state.myMarker.coordinate}
+                key='0'
+                pinColor={this.state.myMarker.pinColor}
+            /> : null;
+
             return (
                 <View style={styles.container}>
                     <MapView
@@ -184,6 +211,8 @@ class ConnectedMapScreen extends React.Component {
                         onRegionChange={this._setRegion}
                         onRegionChangeComplete={this._onRegionChangeComplete}
                         onMapReady={this._onMapReady}>
+
+                        {myMarker}
 
                         {this.state.markers.map((marker, index) => (
                             <MapView.Marker
@@ -218,13 +247,7 @@ const mapStateToProps = state => {
     };
 };
 
-const mapDispatchToProps = dispatch => {
-    return {
-        updateLocation: location => dispatch(updateLocation(location))
-    };
-};
-
-const MapScreen = connect(mapStateToProps, mapDispatchToProps)(ConnectedMapScreen);
+const MapScreen = connect(mapStateToProps)(ConnectedMapScreen);
 
 export default MapScreen;
 
