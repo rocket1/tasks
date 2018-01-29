@@ -1,9 +1,9 @@
 import {Platform} from 'react-native';
 import {Constants, Location, Permissions} from 'expo';
+import {GEO_OPTIONS} from "../common/constants";
 
 class LocationService {
 
-    _geoOptions;
     _killFunc;
     _permsOk = false;
 
@@ -14,12 +14,6 @@ class LocationService {
 
         if (Platform.OS === 'android' && !Constants.isDevice) {
             throw new Error('Oops, geolocation will not work on Sketch in an Android emulator. Try it on your device!')
-        }
-
-        this._geoOptions = {
-            enableHighAccuracy: true,
-            timeInterval: 1000,
-            distanceInterval: 1
         }
     }
 
@@ -88,7 +82,7 @@ class LocationService {
      */
     startPoll(callback) {
         this.stopPoll();
-        this._killFunc = Location.watchPositionAsync(this._geoOptions, callback);
+        this._killFunc = Location.watchPositionAsync(GEO_OPTIONS, callback);
         console.log(this._killFunc);
     }
 
