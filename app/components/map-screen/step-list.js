@@ -17,7 +17,9 @@ class StepList extends React.PureComponent {
      * @param item
      * @private
      */
-    _renderItem = ({item}) => <StepListItem {...item} onSelectStep={this.props.onSelectStep}/>;
+    _renderItem = (item) => {
+        return <StepListItem index={item.index + 1} {...item.item} onSelectStep={this.props.onSelectStep}/>
+    };
 
     /**
      *

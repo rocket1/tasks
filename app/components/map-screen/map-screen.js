@@ -1,11 +1,10 @@
 import React from 'react';
 import MapView from 'react-native-maps';
-import {StyleSheet, View, Text} from 'react-native';
+import {View, Text} from 'react-native';
 import {connect} from 'react-redux';
 import StepList from './step-list';
-import {
-    LIST_ITEM_HEIGHT, BG_COLOR, LIST_HEADER_BG_COLOR, LIST_HEADER_TEXT_COLOR
-} from '../common/styles-common';
+import LocationService from '../location-service/location-service';
+import styles from './map-screen-styles';
 
 class ConnectedMapScreen extends React.Component {
 
@@ -14,9 +13,11 @@ class ConnectedMapScreen extends React.Component {
     };
 
     state = {
-        region: {},
+        region: null,
         markers: []
     };
+
+    _ref;
 
     /**
      *
@@ -26,13 +27,19 @@ class ConnectedMapScreen extends React.Component {
         super(props);
         this._setInitRegion = this._setInitRegion.bind(this);
         this._onMapReady = this._onMapReady.bind(this);
+        this._setRegion = this._setRegion.bind(this);
+        this._setMarkers = this._setMarkers.bind(this);
+        this._onRegionChange = this._onRegionChange.bind(this);
+        this._task = this.props.loadedTask;
+        this._locService = new LocationService;
     }
 
     /**
      *
      */
-    componentWillMount() {
+    componentDidMount() {
         this._setInitRegion();
+        console.log('componentDidMount');
     }
 
     /**
@@ -41,6 +48,40 @@ class ConnectedMapScreen extends React.Component {
      */
     _onMapReady() {
         this._setInitRegion();
+        console.log('onMapReady');
+    }
+
+    /**
+     *
+     * @param region
+     * @private
+     */
+    _setRegion(region) {
+        this.setState({
+            region: region
+        });
+    }
+
+    /**
+     *
+     * @private
+     */
+    _setMarkers(markers) {
+        this.setState({
+            markers: markers
+        });
+    }
+
+    /**
+     *
+     * @param marker
+     * @private
+     */
+    _addMarker(marker) {
+
+        this.setState({
+            markers: [...this.state.markers, marker]
+        });
     }
 
     /**
@@ -48,23 +89,41 @@ class ConnectedMapScreen extends React.Component {
      * @private
      */
     _setInitRegion() {
-
-        const region = {
-            latitude: 37.78825,
-            longitude: -122.4324,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
-        };
-
-        this.setState({region});
-    }
+        this._locService.getCurrentRegion((region) => {
+            this._locService.getCurrentMarker((marker) => {
+                this._setRegion(region);
+                const markers = this._task.steps.map((step) => {
+                    return step.marker;
+                });
+                this._setMarkers(markers);
+                this._addMarker(marker);
+            })
+        });
+    };
 
     /**
      *
      * @param region
      */
     _onRegionChange = (region) => {
-        this.setState({region});
+        // this._setRegion(location);
+        console.log('onRegionChange');
+    };
+
+    /**
+     *
+     */
+    _onRegionChangeComplete = () => {
+        console.log('onRegionChangeComplete');
+    };
+
+    _onLayout = () => {
+        console.log('onLayout');
+        // console.log('ref? ' , this._ref);
+        this._ref.fitToSuppliedMarkers(
+            this.state.markers,
+            false, // not animated
+        );
     };
 
     _onSelectStep = () => {
@@ -77,76 +136,49 @@ class ConnectedMapScreen extends React.Component {
      */
     render() {
 
-        const task = this.props.loadedTask;
+        if (this.state.region) {
 
-        return (
-            <View style={styles.container}>
-                <MapView
-                    style={styles.map}
-                    region={this.state.region}
-                    onRegionChange={this._onRegionChange}
-                    onMapReady={this._onMapReady}>
+            return (
+                <View style={styles.container}>
+                    <MapView
+                        ref={(ref) => {
+                            this._ref = ref;
+                        }}
+                        onLayout={this._onLayout}
+                        mapType="hybrid"
+                        style={styles.map}
+                        region={this.state.region}
+                        zoomControlEnabled={true}
+                        onRegionChange={this._setRegion}
+                        onRegionChangeComplete={this._onRegionChangeComplete}
+                        onMapReady={this._onMapReady}>
 
-                    {this.state.markers.map(marker => (
-                        <MapView.Marker
-                            coordinate={marker.coordinate}
-                            key={marker.key}
-                        />
-                    ))}
+                        {this.state.markers.map((marker, index) => (
+                            <MapView.Marker
+                                coordinate={marker.coordinate}
+                                key={index}
+                                pinColor={marker.pinColor}
+                            />
+                        ))}
 
-                </MapView>
+                    </MapView>
 
-                <View style={styles.info}>
+                    <View style={styles.info}>
 
-                    <View style={styles.taskHeader}><Text style={styles.taskHeaderTitle}>{task.title}</Text></View>
+                        <View style={styles.taskHeader}><Text
+                            style={styles.taskHeaderTitle}>{this._task.title}</Text></View>
 
-                    <StepList steps={task.steps} onSelectStep={this._onSelectStep}/>
+                        <StepList steps={this._task.steps} onSelectStep={this._onSelectStep}/>
+                    </View>
+
                 </View>
-
-            </View>
-        );
+            );
+        }
+        else {
+            return null;
+        }
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        alignItems: 'center',
-        backgroundColor: BG_COLOR
-    },
-    map: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: '50%',
-    },
-    info: {
-        position: 'absolute',
-        top: '50%',
-        left: 0,
-        right: 0,
-        bottom: 0,
-    },
-    taskHeader: {
-        display: 'flex',
-        alignItems: 'flex-start',
-        justifyContent: 'center',
-        backgroundColor: LIST_HEADER_BG_COLOR,
-        height: LIST_ITEM_HEIGHT,
-        marginTop: 1,
-        padding: 3,
-    },
-    taskHeaderTitle: {
-        color: LIST_HEADER_TEXT_COLOR,
-        fontWeight: 'bold'
-    },
-    stepList: {}
-});
 
 const mapStateToProps = state => {
     return {

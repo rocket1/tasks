@@ -3,15 +3,43 @@
   "tasks": [
     {
       "id": "1",
-      "title": "Task 1",
+      "title": "Mt. Tabor Climb",
       "steps": [
         {
           "id": "1",
-          "title": "Step 1"
+          "marker": {
+            "title": "Tabor Stairs",
+            "pinColor": "#ff0000",
+            "taskId": "1",
+            "coordinate": {
+              "latitude": 45.515521,
+              "longitude": -122.592386
+            }
+          }
         },
         {
           "id": "2",
-          "title": "Step 2"
+          "marker": {
+            "title": "Top of Tabor Stairs",
+            "pinColor": "#00ff00",
+            "taskId": "1",
+            "coordinate": {
+              "latitude": 45.513295,
+              "longitude": -122.593251
+            }
+          }
+        },
+        {
+          "id": "3",
+          "marker": {
+            "title": "Far side of Tabor track",
+            "pinColor": "#0000ff",
+            "taskId": "1",
+            "coordinate": {
+              "latitude": 45.511461,
+              "longitude": -122.592393
+            }
+          }
         }
       ]
     },

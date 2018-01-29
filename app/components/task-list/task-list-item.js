@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {StyleSheet, View, Text, Button, TouchableOpacity} from 'react-native';
-import {LIST_ITEM_HEIGHT, LIST_ITEM_BG_COLOR} from '../common/styles-common';
+import {LIST_ITEM_HEIGHT, LIST_ITEM_BG_COLOR, PAD_UNIT} from '../common/styles-common';
 
 class TaskListItem extends React.PureComponent {
 
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
         backgroundColor: LIST_ITEM_BG_COLOR,
         height: LIST_ITEM_HEIGHT,
         marginTop: 1,
-        padding: 3,
+        padding: PAD_UNIT,
         alignItems: 'flex-start',
         justifyContent: 'center'
     },

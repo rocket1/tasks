@@ -1,5 +1,6 @@
 // M E T R I C S
 export const LIST_ITEM_HEIGHT = 48;
+export const PAD_UNIT = 8;
 
 // C O L O R S
 export const BG_COLOR = '#e0ecef';
