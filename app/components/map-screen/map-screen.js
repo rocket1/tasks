@@ -6,6 +6,7 @@ import StepList from './step-list';
 import LocationService from '../location-service/location-service';
 import styles from './map-screen-styles';
 import TaskEvaluator from "../task/task-evaluator";
+import {TASK_DESC_MAP} from "../common/constants";
 
 class ConnectedMapScreen extends React.Component {
 
@@ -18,6 +19,7 @@ class ConnectedMapScreen extends React.Component {
     });
 
     state = {
+        initRegion: null,
         region: null,
         markers: [],
         myMarker: null
@@ -48,6 +50,13 @@ class ConnectedMapScreen extends React.Component {
     /**
      *
      */
+    componentWillMount() {
+        this._setInitRegion();
+    }
+
+    /**
+     *
+     */
     componentDidMount() {
 
         /**
@@ -56,9 +65,8 @@ class ConnectedMapScreen extends React.Component {
          */
 
         this._isMounted = true;
-
-        this._setTaskMarkers();
         this._setInitRegion();
+        this._setTaskMarkers();
         this._startLocationPoll();
 
         console.log('componentDidMount');
@@ -92,10 +100,9 @@ class ConnectedMapScreen extends React.Component {
                     }
                 };
 
-                console.log('myMarker:', myMarker);
                 this._setMyMarker(myMarker);
 
-                this._task = (new TaskEvaluator).evaluate(this._task, myMarker);
+                this._task = (new TaskEvaluator).evaluateMarker(this._task, myMarker);
             }
         });
     }
@@ -147,9 +154,11 @@ class ConnectedMapScreen extends React.Component {
      */
     _setInitRegion() {
         this._locService.getCurrentRegion((region) => {
-            this._locService.getCurrentMarker((marker) => {
-                this._setRegion(region);
-            })
+            console.log('Setting initial region:', region);
+            this.setState({
+                initRegion: region,
+                region: region
+            });
         });
     };
 
@@ -190,7 +199,7 @@ class ConnectedMapScreen extends React.Component {
      */
     render() {
 
-        if (this.state.region) {
+        if (this.state.initRegion) {
 
             const myMarker = this.state.myMarker ? <MapView.Marker
                 coordinate={this.state.myMarker.coordinate}
@@ -207,6 +216,7 @@ class ConnectedMapScreen extends React.Component {
                         onLayout={this._onLayout}
                         mapType="hybrid"
                         style={styles.map}
+                        initialRegion={this.state.initRegion}
                         region={this.state.region}
                         zoomControlEnabled={true}
                         onRegionChange={this._setRegion}
@@ -228,7 +238,7 @@ class ConnectedMapScreen extends React.Component {
                     <View style={styles.info}>
 
                         <View style={styles.taskHeader}><Text
-                            style={styles.taskHeaderTitle}>{this._task.description}</Text></View>
+                            style={styles.taskHeaderTitle}>{TASK_DESC_MAP[this._task.taskType]}</Text></View>
 
                         <StepList steps={this._task.steps} onSelectStep={this._onSelectStep}/>
                     </View>

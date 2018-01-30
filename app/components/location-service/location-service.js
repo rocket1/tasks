@@ -79,7 +79,6 @@ class LocationService {
     startPoll(callback) {
         this.stopPoll();
         this._killFunc = Location.watchPositionAsync(GEO_OPTIONS, callback);
-        console.log(this._killFunc);
     }
 
     /**

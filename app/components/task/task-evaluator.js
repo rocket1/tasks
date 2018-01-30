@@ -9,7 +9,7 @@ class TaskEvaluator {
      * @param marker
      * @returns {*}
      */
-    evaluate(task, marker) {
+    evaluateMarker(task, marker) {
 
         let newSteps = task.steps;
         const coord = marker.coordinate;
@@ -18,6 +18,7 @@ class TaskEvaluator {
             newSteps = this._handleOrdered(newSteps, coord);
         }
         else if (task.taskType === TASK_T_UNORDERED) {
+
             newSteps = this._handleUnordered(newSteps, coord);
         }
 
@@ -34,10 +35,13 @@ class TaskEvaluator {
      */
     _handleOrdered(steps, coord) {
 
-        const step = steps[0];
+        if (steps.length > 0) {
 
-        if (this._withinRange(step.marker.coordinate, coord)) {
-            steps.unshift();
+            const firstStep = steps[0];
+
+            if (this._withinRange(firstStep.marker.coordinate, coord)) {
+                steps.unshift();
+            }
         }
 
         return steps;
@@ -51,8 +55,11 @@ class TaskEvaluator {
      * @private
      */
     _handleUnordered(steps, coord) {
-        return steps.map((step) => {
-            return this._withinRange(step.marker.coordinate, coord);
+
+        console.log('STEPS:', steps);
+
+        return steps.filter((step) => {
+            return !this._withinRange(step.marker.coordinate, coord);
         });
     }
 

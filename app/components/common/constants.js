@@ -8,3 +8,8 @@ export const GEO_OPTIONS = {
 // or maybe make them dynamic based on config for the step.
 export const LAT_RANGE = .001;
 export const LNG_RANGE = .0014;
+
+export const TASK_DESC_MAP = {
+    ORDERED: "To complete this task, visit all the places in order.",
+    UNORDERED: "To complete this task, visit all the places in no particular order."
+};

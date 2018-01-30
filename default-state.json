@@ -4,7 +4,6 @@
     {
       "id": "1",
       "title": "Mt. Tabor Climb",
-      "description": "To complete this task, visit all the places in order.",
       "points": 100,
       "taskType": "ORDERED",
       "taskEndTime": null,
@@ -49,17 +48,18 @@
     },
     {
       "id": "2",
-      "title": "Walk to end of street",
+      "title": "Walk to end of street (UNORDERED)",
+      "taskType": "UNORDERED",
       "steps": [
         {
           "id": "1",
           "marker": {
-            "title": "Bottom of Mt. Tabor Stairs",
+            "title": "Walk to 76th and Burnside",
             "pinColor": "#ff0000",
-            "taskId": "1",
+            "taskId": "2",
             "coordinate": {
-              "latitude": 45.515521,
-              "longitude": -122.592386
+              "latitude": 45.522891,
+              "longitude": -122.584835
             }
           }
         }
@@ -67,7 +67,22 @@
     },
     {
       "id": "3",
-      "title": "Task 3"
+      "title": "Walk to end of street (ORDERED)",
+      "taskType": "ORDERED",
+      "steps": [
+        {
+          "id": "1",
+          "marker": {
+            "title": "Walk to 76th and Burnside",
+            "pinColor": "#ff0000",
+            "taskId": "2",
+            "coordinate": {
+              "latitude": 45.516020999999995,
+              "longitude": -122.591686
+            }
+          }
+        }
+      ]
     },
     {
       "id": "4",
