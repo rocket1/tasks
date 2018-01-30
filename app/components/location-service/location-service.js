@@ -11,7 +11,6 @@ class LocationService {
      *
      */
     constructor() {
-
         if (Platform.OS === 'android' && !Constants.isDevice) {
             throw new Error('Oops, geolocation will not work on Sketch in an Android emulator. Try it on your device!')
         }
@@ -63,9 +62,6 @@ class LocationService {
             const coords = marker.coords;
 
             const cbReturn = {
-                "taskId": 0,
-                "title": "Current Location",
-                "pinColor": "#ffff00",
                 "coordinate": {
                     latitude: coords.latitude,
                     longitude: coords.longitude

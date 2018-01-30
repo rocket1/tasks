@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import StepList from './step-list';
 import LocationService from '../location-service/location-service';
 import styles from './map-screen-styles';
+import TaskEvaluator from "../task/task-evaluator";
 
 class ConnectedMapScreen extends React.Component {
 
@@ -22,7 +23,7 @@ class ConnectedMapScreen extends React.Component {
         myMarker: null
     };
 
-    _ref;
+    _mapRef;
     _isMounted;
 
     /**
@@ -48,10 +49,18 @@ class ConnectedMapScreen extends React.Component {
      *
      */
     componentDidMount() {
+
+        /**
+         * TODO: Use Emitter for this maybe.
+         * See: https://medium.com/@TaylorBriggs/your-react-component-can-t-promise-to-stay-mounted-e5d6eb10cbb
+         */
+
         this._isMounted = true;
+
         this._setTaskMarkers();
         this._setInitRegion();
         this._startLocationPoll();
+
         console.log('componentDidMount');
     }
 
@@ -85,6 +94,8 @@ class ConnectedMapScreen extends React.Component {
 
                 console.log('myMarker:', myMarker);
                 this._setMyMarker(myMarker);
+
+                this._task = (new TaskEvaluator).evaluate(this._task, myMarker);
             }
         });
     }
@@ -132,23 +143,6 @@ class ConnectedMapScreen extends React.Component {
 
     /**
      *
-     * @param marker
-     * @private
-     */
-    _addMarker(marker) {
-        this.setState({
-            markers: [...this.state.markers, marker]
-        });
-    }
-
-    _removeMarker(marker) {
-        this.setState({
-            markers: this.state.markers.splice(1, 1)
-        });
-    }
-
-    /**
-     *
      * @private
      */
     _setInitRegion() {
@@ -176,10 +170,10 @@ class ConnectedMapScreen extends React.Component {
 
     _onLayout = () => {
         console.log('onLayout');
-        // console.log('ref? ' , this._ref);
+        // console.log('ref? ' , this._mapRef);
         setTimeout(() => {
             // console.log('fitting?');
-            // this._ref.fitToSuppliedMarkers(
+            // this._mapRef.fitToSuppliedMarkers(
             //     this.state.markers,
             //     false, // not animated
             // );
@@ -208,7 +202,7 @@ class ConnectedMapScreen extends React.Component {
                 <View style={styles.container}>
                     <MapView
                         ref={(ref) => {
-                            this._ref = ref;
+                            this._mapRef = ref;
                         }}
                         onLayout={this._onLayout}
                         mapType="hybrid"

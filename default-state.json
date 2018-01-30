@@ -6,6 +6,8 @@
       "title": "Mt. Tabor Climb",
       "description": "To complete this task, visit all the places in order.",
       "points": 100,
+      "taskType": "ORDERED",
+      "taskEndTime": null,
       "steps": [
         {
           "id": "1",
@@ -47,7 +49,21 @@
     },
     {
       "id": "2",
-      "title": "Task 2"
+      "title": "Walk to end of street",
+      "steps": [
+        {
+          "id": "1",
+          "marker": {
+            "title": "Bottom of Mt. Tabor Stairs",
+            "pinColor": "#ff0000",
+            "taskId": "1",
+            "coordinate": {
+              "latitude": 45.515521,
+              "longitude": -122.592386
+            }
+          }
+        }
+      ]
     },
     {
       "id": "3",
