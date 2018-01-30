@@ -22,11 +22,14 @@ class ConnectedMapScreen extends React.Component {
         initRegion: null,
         region: null,
         markers: [],
+        polygons: [],
         myMarker: null
     };
 
     _mapRef;
     _isMounted;
+    _locService;
+    _taskEvaluator;
 
     /**
      *
@@ -45,6 +48,7 @@ class ConnectedMapScreen extends React.Component {
         this._onRegionChange = this._onRegionChange.bind(this);
 
         this._locService = new LocationService;
+        this._taskEvaluator = new TaskEvaluator;
     }
 
     /**
@@ -66,7 +70,13 @@ class ConnectedMapScreen extends React.Component {
 
         this._isMounted = true;
         this._setInitRegion();
-        this._setTaskMarkers();
+
+        const markers = this._task.steps.map((step) => {
+            return step.marker;
+        });
+
+        this._setTaskMarkers(markers);
+        this._setPolygons(markers);
         this._startLocationPoll();
 
         console.log('componentDidMount');
@@ -101,8 +111,7 @@ class ConnectedMapScreen extends React.Component {
                 };
 
                 this._setMyMarker(myMarker);
-
-                this._task = (new TaskEvaluator).evaluateMarker(this._task, myMarker);
+                this._task = this._taskEvaluator.evaluateMarker(this._task, myMarker);
             }
         });
     }
@@ -131,20 +140,36 @@ class ConnectedMapScreen extends React.Component {
      *
      * @private
      */
-    _setTaskMarkers() {
-
-        const markers = this._task.steps.map((step) => {
-            return step.marker;
-        });
-
+    _setTaskMarkers(markers) {
         this.setState({
             markers: markers
         });
     }
 
+    /**
+     *
+     * @param marker
+     * @private
+     */
     _setMyMarker(marker) {
         this.setState({
             myMarker: marker
+        });
+    }
+
+    /**
+     *
+     * @param markers
+     * @private
+     */
+    _setPolygons(markers) {
+
+        const polygons = markers.map((marker) => {
+            return this._locService.getPolygon(marker.coordinate);
+        });
+
+        this.setState({
+            polygons: polygons
         });
     }
 
@@ -154,7 +179,6 @@ class ConnectedMapScreen extends React.Component {
      */
     _setInitRegion() {
         this._locService.getCurrentRegion((region) => {
-            console.log('Setting initial region:', region);
             this.setState({
                 initRegion: region,
                 region: region
@@ -207,6 +231,17 @@ class ConnectedMapScreen extends React.Component {
                 pinColor={this.state.myMarker.pinColor}
             /> : null;
 
+            const polyGons = this.state.polygons.map((polygon, index) => (
+                    <MapView.Polygon
+                        key={index}
+                        coordinates={polygon}
+                        fillColor="rgba(0, 200, 0, 0.5)"
+                        strokeColor="rgba(0,0,0,0.5)"
+                        strokeWidth={2}
+                    />
+                )
+            );
+
             return (
                 <View style={styles.container}>
                     <MapView
@@ -222,6 +257,8 @@ class ConnectedMapScreen extends React.Component {
                         onRegionChange={this._setRegion}
                         onRegionChangeComplete={this._onRegionChangeComplete}
                         onMapReady={this._onMapReady}>
+
+                        {polyGons}
 
                         {myMarker}
 

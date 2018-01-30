@@ -48,8 +48,8 @@
     },
     {
       "id": "2",
-      "title": "Walk to end of street (UNORDERED)",
-      "taskType": "UNORDERED",
+      "title": "Walk to end of street (ORDERED)",
+      "taskType": "ORDERED",
       "steps": [
         {
           "id": "1",
@@ -62,13 +62,49 @@
               "longitude": -122.584835
             }
           }
+        },
+        {
+          "id": "2",
+          "marker": {
+            "title": "Walk to 75th and Burnside",
+            "pinColor": "#ff0000",
+            "taskId": "2",
+            "coordinate": {
+              "latitude": 45.522916,
+              "longitude": -122.585769
+            }
+          }
+        },
+        {
+          "id": "3",
+          "marker": {
+            "title": "Walk to 75th and Everett",
+            "pinColor": "#ff0000",
+            "taskId": "2",
+            "coordinate": {
+              "latitude": 45.524583,
+              "longitude": -122.585784
+            }
+          }
+        },
+        {
+          "id": "4    ",
+          "marker": {
+            "title": "Walk Home",
+            "pinColor": "#ff0000",
+            "taskId": "2",
+            "coordinate": {
+              "latitude": 45.523319,
+              "longitude": -122.584922
+            }
+          }
         }
       ]
     },
     {
       "id": "3",
-      "title": "Walk to end of street (ORDERED)",
-      "taskType": "ORDERED",
+      "title": "Walk to end of street (UNORDERED)",
+      "taskType": "UNORDERED",
       "steps": [
         {
           "id": "1",

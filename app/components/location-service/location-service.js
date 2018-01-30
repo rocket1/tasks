@@ -1,6 +1,6 @@
 import {Platform} from 'react-native';
 import {Constants, Location, Permissions} from 'expo';
-import {GEO_OPTIONS} from "../common/constants";
+import {GEO_OPTIONS, LAT_RANGE, LNG_RANGE} from "../common/constants";
 
 class LocationService {
 
@@ -70,6 +70,50 @@ class LocationService {
 
             callback(cbReturn);
         });
+    }
+
+    /**
+     *
+     * @param coord
+     * @returns {{latMin: number, lngMin: number, latMax: *, lngMax: *}}
+     */
+    getPolygonBounds(coord) {
+
+        const latMin = coord.latitude - (LAT_RANGE / 2);
+        const lngMin = coord.longitude - (LNG_RANGE / 2);
+
+        return {
+            latMin: latMin,
+            lngMin: lngMin,
+            latMax: latMin + LAT_RANGE,
+            lngMax: lngMin + LNG_RANGE
+        }
+    }
+
+    /**
+     *
+     * @param coord
+     */
+    getPolygon(coord) {
+        const {latMin, lngMin, latMax, lngMax} = this.getPolygonBounds(coord);
+        return [
+            {
+                latitude: latMin,
+                longitude: lngMin,
+            },
+            {
+                latitude: latMax,
+                longitude: lngMin,
+            },
+            {
+                latitude: latMax,
+                longitude: lngMax,
+            },
+            {
+                latitude: latMin,
+                longitude: lngMax,
+            },
+        ]
     }
 
     /**
