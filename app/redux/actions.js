@@ -1,4 +1,4 @@
-import {ADD_TASK, LOAD_TASK, UPDATE_LOCATION} from './actionTypes';
+import {ADD_TASK, LOAD_INIT_REGION, LOAD_TASK} from './actionTypes';
 
 export const addTask = task => ({
     type: ADD_TASK,
@@ -8,4 +8,9 @@ export const addTask = task => ({
 export const loadTask = taskId => ({
     type: LOAD_TASK,
     payload: taskId
+});
+
+export const loadInitRegion = region => ({
+    type: LOAD_INIT_REGION,
+    payload: region
 });

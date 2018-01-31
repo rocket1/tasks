@@ -4,8 +4,10 @@ import store from './app/redux/store';
 import {StackNavigator} from 'react-navigation';
 import TaskScreen from "./app/components/task-screen/task-screen";
 import MapScreen from "./app/components/map-screen/map-screen";
+import InitScreen from "./app/components/init-screen/init-screen";
 
 const Navigator = StackNavigator({
+    Init: {screen: InitScreen},
     Tasks: {screen: TaskScreen},
     Map: {screen: MapScreen}
 });

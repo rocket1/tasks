@@ -19,3 +19,9 @@ yarn add redux (and react-redux)
 npm install -g typescript
 
 yarn add @types/react-native @types/react
+
+yarn add react-native-cli
+
+FOR DEBUG:
+Use the Chrome Debugger!
+https://docs.expo.io/versions/latest/guides/development-mode.html

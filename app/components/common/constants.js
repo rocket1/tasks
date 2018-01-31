@@ -13,3 +13,9 @@ export const TASK_DESC_MAP = {
     ORDERED: "To complete this task, visit all the places in order.",
     UNORDERED: "To complete this task, visit all the places in no particular order."
 };
+
+// D E B U G
+export const DEBUG_HOME_COORDS = {
+    'latitude': 45.522924,
+    'longitude': -122.584855
+};

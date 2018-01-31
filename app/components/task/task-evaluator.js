@@ -72,7 +72,7 @@ class TaskEvaluator {
         const cLat = coord.latitude;
         const cLng = coord.longitude;
 
-        console.log('cLat,cLng', cLat, ',', cLng, 'latMin,lngMin', latMin, ',', lngMin, 'latMax,lngMax', latMax, ',', lngMax, '(cLat >= latMin)', (cLat >= latMin), '(cLat <= latMax)', (cLat <= latMax), '(cLng >= lngMin)', (cLng >= lngMin), '(cLng >= lngMin)', (cLng >= lngMin));
+        // console.log('(latMin <= latMax)',(latMin <= latMax),'\n(lngMin <= lngMax)',(latMin <= latMax),'\ncLat,cLng', cLat, ',', cLng, '\nlatMin,lngMin', latMin, ',', lngMin, '\nlatMax,lngMax', latMax, ',', lngMax, '\n(cLat >= latMin)', (cLat >= latMin), '\n(cLat <= latMax)', (cLat <= latMax), '\n(cLng >= lngMin)', (cLng >= lngMin), '\n(cLng >= lngMin)', (cLng >= lngMin));
 
         // TODO: Look at how this is affected by North versus South hemisphere :(
         return (cLat >= latMin) && (cLat <= latMax) && (cLng >= lngMin) && (cLng >= lngMin);

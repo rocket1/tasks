@@ -6,7 +6,8 @@ import StepList from './step-list';
 import LocationService from '../location-service/location-service';
 import styles from './map-screen-styles';
 import TaskEvaluator from "../task/task-evaluator";
-import {TASK_DESC_MAP} from "../common/constants";
+import {DEBUG_HOME_COORDS, TASK_DESC_MAP} from "../common/constants";
+import {loadInitRegion} from "../../redux/actions";
 
 class ConnectedMapScreen extends React.Component {
 
@@ -19,7 +20,6 @@ class ConnectedMapScreen extends React.Component {
     });
 
     state = {
-        initRegion: null,
         region: null,
         markers: [],
         polygons: [],
@@ -41,7 +41,6 @@ class ConnectedMapScreen extends React.Component {
 
         this._task = this.props.loadedTask;
 
-        this._setInitRegion = this._setInitRegion.bind(this);
         this._onMapReady = this._onMapReady.bind(this);
         this._setRegion = this._setRegion.bind(this);
         this._setTaskMarkers = this._setTaskMarkers.bind(this);
@@ -49,13 +48,6 @@ class ConnectedMapScreen extends React.Component {
 
         this._locService = new LocationService;
         this._taskEvaluator = new TaskEvaluator;
-    }
-
-    /**
-     *
-     */
-    componentWillMount() {
-        this._setInitRegion();
     }
 
     /**
@@ -69,7 +61,6 @@ class ConnectedMapScreen extends React.Component {
          */
 
         this._isMounted = true;
-        this._setInitRegion();
 
         const markers = this._task.steps.map((step) => {
             return step.marker;
@@ -77,7 +68,6 @@ class ConnectedMapScreen extends React.Component {
 
         this._setTaskMarkers(markers);
         this._setPolygons(markers);
-        this._startLocationPoll();
 
         console.log('componentDidMount');
     }
@@ -97,19 +87,17 @@ class ConnectedMapScreen extends React.Component {
      */
     _startLocationPoll() {
 
-        this._locService.startPoll((marker) => {
+        this._locService.startPoll((coords) => {
 
             if (this._isMounted) {
 
                 const myMarker = {
                     'title': 'My Location',
                     'pinColor': '#ffff00',
-                    'coordinate': {
-                        'longitude': marker.coords.longitude,
-                        'latitude': marker.coords.latitude,
-                    }
+                    "coordinate": coords
                 };
 
+                // console.log('mymarker:', myMarker);
                 this._setMyMarker(myMarker);
                 this._task = this._taskEvaluator.evaluateMarker(this._task, myMarker);
             }
@@ -121,7 +109,6 @@ class ConnectedMapScreen extends React.Component {
      * @private
      */
     _onMapReady() {
-        this._setInitRegion();
         console.log('onMapReady');
     }
 
@@ -131,9 +118,9 @@ class ConnectedMapScreen extends React.Component {
      * @private
      */
     _setRegion(region) {
-        this.setState({
-            region: region
-        });
+        // this.setState({
+        //     region: region
+        // });
     }
 
     /**
@@ -175,19 +162,6 @@ class ConnectedMapScreen extends React.Component {
 
     /**
      *
-     * @private
-     */
-    _setInitRegion() {
-        this._locService.getCurrentRegion((region) => {
-            this.setState({
-                initRegion: region,
-                region: region
-            });
-        });
-    };
-
-    /**
-     *
      * @param region
      */
     _onRegionChange = (region) => {
@@ -198,19 +172,11 @@ class ConnectedMapScreen extends React.Component {
      *
      */
     _onRegionChangeComplete = () => {
-        console.log('onRegionChangeComplete');
+        // console.log('onRegionChangeComplete');
     };
 
     _onLayout = () => {
-        console.log('onLayout');
-        // console.log('ref? ' , this._mapRef);
-        setTimeout(() => {
-            // console.log('fitting?');
-            // this._mapRef.fitToSuppliedMarkers(
-            //     this.state.markers,
-            //     false, // not animated
-            // );
-        }, 2000);
+        this._startLocationPoll();
     };
 
     _onSelectStep = () => {
@@ -223,7 +189,7 @@ class ConnectedMapScreen extends React.Component {
      */
     render() {
 
-        if (this.state.initRegion) {
+        if (this.props.initRegion) {
 
             const myMarker = this.state.myMarker ? <MapView.Marker
                 coordinate={this.state.myMarker.coordinate}
@@ -251,8 +217,8 @@ class ConnectedMapScreen extends React.Component {
                         onLayout={this._onLayout}
                         mapType="hybrid"
                         style={styles.map}
-                        initialRegion={this.state.initRegion}
-                        region={this.state.region}
+                        initialRegion={this.props.initRegion}
+                        region={this.state.region ? this.state.region : this.props.initRegion}
                         zoomControlEnabled={true}
                         onRegionChange={this._setRegion}
                         onRegionChangeComplete={this._onRegionChangeComplete}
@@ -291,6 +257,7 @@ class ConnectedMapScreen extends React.Component {
 
 const mapStateToProps = state => {
     return {
+        initRegion: state.initRegion,
         loadedTask: state.loadedTask
     };
 };

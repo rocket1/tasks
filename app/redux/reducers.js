@@ -1,5 +1,5 @@
 import defaultState from '../../default-state.json'
-import {ADD_TASK, LOAD_TASK, UPDATE_LOCATION} from './actionTypes';
+import {ADD_TASK, LOAD_INIT_REGION, LOAD_TASK} from './actionTypes';
 
 /**
  *
@@ -24,6 +24,8 @@ const loadTaskReducer = (state, action) => {
     return state;
 };
 
+const loadInitRegionReducer = (state, action) => ({...state, initRegion: action.payload});
+
 /**
  *
  * @param state
@@ -36,6 +38,8 @@ const rootReducer = (state = defaultState, action) => {
             return addTaskReducer(state, action);
         case LOAD_TASK:
             return loadTaskReducer(state, action);
+        case LOAD_INIT_REGION:
+            return loadInitRegionReducer(state, action);
         default:
             return state;
     }
