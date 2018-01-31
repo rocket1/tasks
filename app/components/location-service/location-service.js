@@ -1,6 +1,6 @@
 import {Platform} from 'react-native';
 import {Constants, Location, Permissions} from 'expo';
-import {DEBUG_HOME_COORDS, GEO_OPTIONS, LAT_RANGE, LNG_RANGE} from "../common/constants";
+import {DEBUG_HOME_COORDS, GEO_OPTIONS, LAT_DELTA, LAT_RANGE, LNG_DELTA, LNG_RANGE} from "../common/constants";
 
 class LocationService {
 
@@ -44,8 +44,8 @@ class LocationService {
 
             const currRegion = {
                 ...coords,
-                latitudeDelta: 0.03,
-                longitudeDelta: 0.03
+                latitudeDelta: LAT_DELTA,
+                longitudeDelta: LNG_DELTA
             };
 
             callback(currRegion);
@@ -58,6 +58,9 @@ class LocationService {
      * @returns {{latMin: number, lngMin: number, latMax: *, lngMax: *}}
      */
     getPolygonBounds(coord) {
+
+        // Map increase LAT going north.
+        // Map increases LNG going east.
 
         const latMin = coord.latitude - (LAT_RANGE / 2);
         const lngMin = coord.longitude - (LNG_RANGE / 2);
