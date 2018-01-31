@@ -19,6 +19,7 @@
     "preset": "jest-expo"
   },
   "dependencies": {
+    "enumify": "^1.0.4",
     "expo": "^23.0.4",
     "ios-sim": "^6.1.2",
     "proptypes": "^1.1.0",
