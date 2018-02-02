@@ -24,6 +24,8 @@ yarn add react-native-cli
 
 yarn add enumify (for enumerations)
 
+yarn add react-native-extended-stylesheet
+
 FOR DEBUG:
 Use the Chrome Debugger!
 https://docs.expo.io/versions/latest/guides/development-mode.html

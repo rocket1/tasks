@@ -12,7 +12,7 @@ class ConnectedInitScreen extends React.Component {
      * @param navigation
      */
     static navigationOptions = {
-        title: 'Loading Tasks',
+        title: 'Home',
     };
 
     /**

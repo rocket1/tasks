@@ -57,7 +57,7 @@
           "stepState": "INCOMPLETE",
           "marker": {
             "title": "Walk to 76th and Burnside",
-            "pinColor": "#ff0000",
+            "pinColor": "#00ff00",
             "taskId": "2",
             "coordinate": {
               "latitude": 45.522891,
@@ -83,7 +83,7 @@
           "stepState": "INCOMPLETE",
           "marker": {
             "title": "Walk to 75th and Everett",
-            "pinColor": "#ff0000",
+            "pinColor": "#0000ff",
             "taskId": "2",
             "coordinate": {
               "latitude": 45.524583,
@@ -96,7 +96,7 @@
           "stepState": "INCOMPLETE",
           "marker": {
             "title": "Walk Home",
-            "pinColor": "#ff0000",
+            "pinColor": "#ff00ff",
             "taskId": "2",
             "coordinate": {
               "latitude": 45.523319,
