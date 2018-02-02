@@ -3,14 +3,20 @@ import PropTypes from 'prop-types';
 import {StyleSheet, View, Text, Button, TouchableOpacity} from 'react-native';
 import {LIST_ITEM_HEIGHT, LIST_ITEM_BG_COLOR, PAD_UNIT} from '../common/styles-common';
 
-class TaskListItem extends React.PureComponent {
+class TaskListItem extends React.Component {
+
+    shouldComponentUpdate(nextProps) {
+        const differentTitle = this.props.title !== nextProps.title;
+        const differentDone = this.props.done !== nextProps.done
+        return differentTitle || differentDone;
+    }
 
     /**
      *
      * @private
      */
     _onSelectTask = () => {
-        this.props.onSelectTask(this.props.id);
+        this.props.onSelectTask({...this.props});
     };
 
     /**

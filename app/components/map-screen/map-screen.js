@@ -7,7 +7,7 @@ import LocationService from '../location-service/location-service';
 import styles from './map-screen-styles';
 import TaskEvaluator from "../task/task-evaluator";
 import {DEBUG_HOME_COORDS, TASK_DESC_MAP} from "../common/constants";
-import {loadInitRegion} from "../../redux/actions";
+import {loadTask} from "../../redux/actions";
 
 class ConnectedMapScreen extends React.Component {
 
@@ -39,8 +39,6 @@ class ConnectedMapScreen extends React.Component {
 
         super(props);
 
-        this._task = this.props.loadedTask;
-
         this._onMapReady = this._onMapReady.bind(this);
         this._setRegion = this._setRegion.bind(this);
         this._setTaskMarkers = this._setTaskMarkers.bind(this);
@@ -62,7 +60,7 @@ class ConnectedMapScreen extends React.Component {
 
         this._isMounted = true;
 
-        const markers = this._task.steps.map((step) => {
+        const markers = this.props.loadedTask.steps.map((step) => {
             return step.marker;
         });
 
@@ -99,7 +97,9 @@ class ConnectedMapScreen extends React.Component {
 
                 // console.log('mymarker:', myMarker);
                 this._setMyMarker(myMarker);
-                this._task = this._taskEvaluator.evaluateMarker(this._task, myMarker);
+                const evalTask = this._taskEvaluator.evaluateMarker({...this.props.loadedTask}, myMarker);
+                this.props.loadTask({...evalTask});
+                this.forceUpdate();
             }
         });
     }
@@ -241,9 +241,9 @@ class ConnectedMapScreen extends React.Component {
                     <View style={styles.info}>
 
                         <View style={styles.taskHeader}><Text
-                            style={styles.taskHeaderTitle}>{TASK_DESC_MAP[this._task.taskType]}</Text></View>
+                            style={styles.taskHeaderTitle}>{TASK_DESC_MAP[this.props.loadedTask.taskType]}</Text></View>
 
-                        <StepList steps={this._task.steps} onSelectStep={this._onSelectStep}/>
+                        <StepList steps={this.props.loadedTask.steps} onSelectStep={this._onSelectStep}/>
                     </View>
 
                 </View>
@@ -262,7 +262,13 @@ const mapStateToProps = state => {
     };
 };
 
-const MapScreen = connect(mapStateToProps)(ConnectedMapScreen);
+const mapDispatchToProps = dispatch => {
+    return {
+        loadTask: task => dispatch(loadTask(task))
+    };
+};
+
+const MapScreen = connect(mapStateToProps, mapDispatchToProps)(ConnectedMapScreen);
 
 export default MapScreen;
 

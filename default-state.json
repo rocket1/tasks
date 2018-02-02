@@ -54,6 +54,7 @@
       "steps": [
         {
           "id": "1",
+          "stepState": "INCOMPLETE",
           "marker": {
             "title": "Walk to 76th and Burnside",
             "pinColor": "#ff0000",
@@ -66,6 +67,7 @@
         },
         {
           "id": "2",
+          "stepState": "INCOMPLETE",
           "marker": {
             "title": "Walk to 75th and Burnside",
             "pinColor": "#ff0000",
@@ -78,6 +80,7 @@
         },
         {
           "id": "3",
+          "stepState": "INCOMPLETE",
           "marker": {
             "title": "Walk to 75th and Everett",
             "pinColor": "#ff0000",
@@ -89,7 +92,8 @@
           }
         },
         {
-          "id": "4    ",
+          "id": "4",
+          "stepState": "INCOMPLETE",
           "marker": {
             "title": "Walk Home",
             "pinColor": "#ff0000",

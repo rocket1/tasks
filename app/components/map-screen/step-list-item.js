@@ -2,8 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {StyleSheet, View, Text, Button, TouchableOpacity} from 'react-native';
 import {LIST_ITEM_BG_COLOR, LIST_ITEM_HEIGHT, PAD_UNIT, TEXT_COLOR_2} from "../common/styles-common";
+import {COMPLETE_STEP_STATE} from "../task/step-state";
 
-class StepListItem extends React.PureComponent {
+class StepListItem extends React.Component {
+
+    // shouldComponentUpdate(nextProps) {
+    //     console.log('foo:', this.props.stepState, nextProps.stepState);
+    //     return this.props.stepState !== nextProps.stepState;
+    // }
 
     /**
      *
@@ -23,7 +29,7 @@ class StepListItem extends React.PureComponent {
             <TouchableOpacity onPress={this._onSelectStep} style={styles.stepListItem}>
                 <View>
                     <Text style={styles.title}>
-                        {this.props.index}. {this.props.marker.title}
+                        {this.props.index}. {this.props.marker.title} done? {this.props.stepState}
                     </Text>
                 </View>
             </TouchableOpacity>

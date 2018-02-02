@@ -2,7 +2,7 @@ import React from 'react';
 import {FlatList} from 'react-native';
 import StepListItem from './step-list-item';
 
-class StepList extends React.PureComponent {
+class StepList extends React.Component {
 
     /**
      *
@@ -23,13 +23,13 @@ class StepList extends React.PureComponent {
 
     /**
      *
-     * @returns {XML}
+     * @returns {*}
      */
     render() {
         return (
             <FlatList
                 data={this.props.steps}
-                extraData={this.state}
+                extraData={this.props}
                 keyExtractor={this._keyExtractor}
                 renderItem={this._renderItem}
             />

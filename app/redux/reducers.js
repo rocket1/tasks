@@ -1,6 +1,6 @@
 import defaultState from '../../default-state.json'
 import {ADD_TASK, LOAD_INIT_REGION, LOAD_TASK} from './actionTypes';
-import TaskState from '../components/task/task-states';
+import StepState from '../components/task/step-state';
 
 /**
  *
@@ -16,17 +16,14 @@ const addTaskReducer = (state, action) => ({...state, tasks: [...state.tasks, ac
  * @param action
  * @returns {*}
  */
-const loadTaskReducer = (state, action) => {
-    for (let i = 0, len = state.tasks.length; i < len; ++i) {
-        if (state.tasks[i].id === action.payload) {
-            const task = state.tasks[i];
-            task.taskState = TaskState.INCOMPLETE;
-            return {...state, loadedTask: task}
-        }
-    }
-    return state;
-};
+const loadTaskReducer = (state, action) => ({...state, loadedTask: action.payload});
 
+/**
+ *
+ * @param state
+ * @param action
+ * @returns {{initRegion}}
+ */
 const loadInitRegionReducer = (state, action) => ({...state, initRegion: action.payload});
 
 /**

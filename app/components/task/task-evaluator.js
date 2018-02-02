@@ -1,5 +1,6 @@
 import {TASK_T_ORDERED, TASK_T_UNORDERED} from "./task";
 import LocationService from "../location-service/location-service";
+import {COMPLETE_STEP_STATE} from "./step-state";
 
 class TaskEvaluator {
 
@@ -11,18 +12,19 @@ class TaskEvaluator {
      */
     evaluateMarker(task, marker) {
 
-        let newSteps = task.steps;
+        const newTask = {...task};
+        let newSteps = newTask.steps;
         const coord = marker.coordinate;
 
-        if (task.taskType === TASK_T_ORDERED) {
+        if (newTask.taskType === TASK_T_ORDERED) {
             newSteps = this._handleOrdered(newSteps, coord);
         }
-        else if (task.taskType === TASK_T_UNORDERED) {
+        else if (newTask.taskType === TASK_T_UNORDERED) {
             newSteps = this._handleUnordered(newSteps, coord);
         }
 
-        task.steps = newSteps;
-        return task;
+        newTask.steps = newSteps;
+        return newTask;
     }
 
     /**
@@ -36,11 +38,12 @@ class TaskEvaluator {
 
         if (steps.length > 0) {
 
-            const firstStep = steps[0];
+            let firstStep = steps.find( (step) => {
+                const stepComplete = step.stepState === COMPLETE_STEP_STATE;
+                return step.stepState !== stepComplete;
+            });
 
-            if (this._withinRange(firstStep.marker.coordinate, coord)) {
-                steps.shift();
-            }
+            steps[0] = this._markCompleteIfInRange(firstStep, coord);
         }
 
         return steps;
@@ -54,9 +57,22 @@ class TaskEvaluator {
      * @private
      */
     _handleUnordered(steps, coord) {
-        return steps.filter((step) => {
-            return !this._withinRange(step.marker.coordinate, coord);
+        return steps.map((step) => {
+            return this._markCompleteIfInRange(step, coord);
         });
+    }
+
+    /**
+     *
+     * @param step
+     * @returns {*}
+     * @private
+     */
+    _markCompleteIfInRange(step, coord) {
+        if (this._withinRange(step.marker.coordinate, coord)) {
+            step.stepState = COMPLETE_STEP_STATE;
+        }
+        return step;
     }
 
     /**

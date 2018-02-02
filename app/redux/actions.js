@@ -5,9 +5,9 @@ export const addTask = task => ({
     payload: task
 });
 
-export const loadTask = taskId => ({
+export const loadTask = task => ({
     type: LOAD_TASK,
-    payload: taskId
+    payload: task
 });
 
 export const loadInitRegion = region => ({
