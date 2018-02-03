@@ -30,6 +30,7 @@ class ConnectedMapScreen extends React.Component {
     _isMounted;
     _locService;
     _taskEvaluator;
+    _myMarkerWasDragged = false;
 
     /**
      *
@@ -43,6 +44,7 @@ class ConnectedMapScreen extends React.Component {
         this._setRegion = this._setRegion.bind(this);
         this._setTaskMarkers = this._setTaskMarkers.bind(this);
         this._onRegionChange = this._onRegionChange.bind(this);
+        this._handleMyMarkerOnDragEnd = this._handleMyMarkerOnDragEnd.bind(this);
 
         this._locService = new LocationService;
         this._taskEvaluator = new TaskEvaluator;
@@ -87,19 +89,8 @@ class ConnectedMapScreen extends React.Component {
 
         this._locService.startPoll((coords) => {
 
-            if (this._isMounted) {
-
-                const myMarker = {
-                    'title': 'My Location',
-                    'pinColor': '#ffff00',
-                    "coordinate": coords
-                };
-
-                // console.log('mymarker:', myMarker);
-                this._setMyMarker(myMarker);
-                const evalTask = this._taskEvaluator.evaluateMarker({...this.props.loadedTask}, myMarker);
-                this.props.loadTask({...evalTask});
-                this.forceUpdate();
+            if (this._isMounted && !this._myMarkerWasDragged) {
+                this._setMyMarker(coords);
             }
         });
     }
@@ -135,13 +126,32 @@ class ConnectedMapScreen extends React.Component {
 
     /**
      *
-     * @param marker
+     * @param myMarker
      * @private
      */
-    _setMyMarker(marker) {
+    _evalTaskAgainstMyMarker(myMarker) {
+        const evalTask = this._taskEvaluator.evaluateMarker({...this.props.loadedTask}, myMarker);
+        this.props.loadTask({...evalTask});
+    }
+
+    /**
+     *
+     * @param coords
+     * @private
+     */
+    _setMyMarker(coords) {
+
+        const myMarker = {
+            title: 'My Location',
+            pinColor: '#ffff00',
+            coordinate: coords
+        };
+
         this.setState({
-            myMarker: marker
+            myMarker: myMarker
         });
+
+        this._evalTaskAgainstMyMarker(myMarker);
     }
 
     /**
@@ -185,6 +195,16 @@ class ConnectedMapScreen extends React.Component {
 
     /**
      *
+     * @private
+     */
+    _handleMyMarkerOnDragEnd(event) {
+        this._myMarkerWasDragged = true;
+        const coords = event.nativeEvent.coordinate;
+        this._setMyMarker(coords);
+    }
+
+    /**
+     *
      * @returns {XML}
      */
     render() {
@@ -192,6 +212,8 @@ class ConnectedMapScreen extends React.Component {
         if (this.props.initRegion) {
 
             const myMarker = this.state.myMarker ? <MapView.Marker
+                draggable
+                onDragEnd={this._handleMyMarkerOnDragEnd}
                 coordinate={this.state.myMarker.coordinate}
                 key='0'
                 pinColor={this.state.myMarker.pinColor}
@@ -218,7 +240,7 @@ class ConnectedMapScreen extends React.Component {
                         mapType="hybrid"
                         style={styles.map}
                         initialRegion={this.props.initRegion}
-                        region={this.state.region ? this.state.region : this.props.initRegion}
+                        region={this.state.region}
                         zoomControlEnabled={true}
                         onRegionChange={this._setRegion}
                         onRegionChangeComplete={this._onRegionChangeComplete}

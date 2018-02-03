@@ -1,6 +1,6 @@
 import {TASK_T_ORDERED, TASK_T_UNORDERED} from "./task";
 import LocationService from "../location-service/location-service";
-import {COMPLETE_STEP_STATE} from "./step-state";
+import {COMPLETE_STEP_STATE, INCOMPLETE_STEP_STATE} from "./step-state";
 
 class TaskEvaluator {
 
@@ -38,12 +38,11 @@ class TaskEvaluator {
 
         if (steps.length > 0) {
 
-            let firstStep = steps.find( (step) => {
-                const stepComplete = step.stepState === COMPLETE_STEP_STATE;
-                return step.stepState !== stepComplete;
+            let firstIncompleteStep = steps.find((step) => {
+                return step.stepState === INCOMPLETE_STEP_STATE;
             });
 
-            steps[0] = this._markCompleteIfInRange(firstStep, coord);
+            firstIncompleteStep = this._markCompleteIfInRange(firstIncompleteStep, coord);
         }
 
         return steps;
@@ -65,6 +64,7 @@ class TaskEvaluator {
     /**
      *
      * @param step
+     * @param coord
      * @returns {*}
      * @private
      */
