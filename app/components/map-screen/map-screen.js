@@ -8,6 +8,7 @@ import styles from './map-screen-styles';
 import TaskEvaluator from "../task/task-evaluator";
 import {DEBUG_HOME_COORDS, TASK_DESC_MAP} from "../common/constants";
 import {loadTask} from "../../redux/actions";
+import {INCOMPLETE_STEP_STATE} from "../task/step-state";
 
 class ConnectedMapScreen extends React.Component {
 
@@ -205,6 +206,14 @@ class ConnectedMapScreen extends React.Component {
 
     /**
      *
+     * @private
+     */
+    _taskComplete() {
+        return !this.props.loadedTask.steps.find(step => step.stepState === INCOMPLETE_STEP_STATE);
+    }
+
+    /**
+     *
      * @returns {XML}
      */
     render() {
@@ -229,6 +238,10 @@ class ConnectedMapScreen extends React.Component {
                     />
                 )
             );
+
+            const taskHdr = this._taskComplete() ? <View style={styles.taskHeaderSuccess}><Text
+                style={styles.taskHeaderTitleSuccess}>Task Complete.</Text></View> : <View style={styles.taskHeader}><Text
+                style={styles.taskHeaderTitle}>{TASK_DESC_MAP[this.props.loadedTask.taskType]}</Text></View>;
 
             return (
                 <View style={styles.container}>
@@ -262,8 +275,7 @@ class ConnectedMapScreen extends React.Component {
 
                     <View style={styles.info}>
 
-                        <View style={styles.taskHeader}><Text
-                            style={styles.taskHeaderTitle}>{TASK_DESC_MAP[this.props.loadedTask.taskType]}</Text></View>
+                        {taskHdr}
 
                         <StepList steps={this.props.loadedTask.steps} onSelectStep={this._onSelectStep}/>
                     </View>
