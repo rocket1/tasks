@@ -109,17 +109,18 @@
     {
       "id": "3",
       "title": "Walk to end of street (UNORDERED)",
-      "taskType": "UNORDERED",
+      "taskType": "ORDERED",
       "steps": [
         {
           "id": "1",
+          "stepState": "INCOMPLETE",
           "marker": {
-            "title": "Walk to 76th and Burnside",
+            "title": "Walk to 75th and Burnside",
             "pinColor": "#ff0000",
-            "taskId": "2",
+            "taskId": "3",
             "coordinate": {
-              "latitude": 45.516020999999995,
-              "longitude": -122.591686
+              "latitude": 45.522916,
+              "longitude": -122.585769
             }
           }
         }
