@@ -21,6 +21,7 @@
   "dependencies": {
     "enumify": "^1.0.4",
     "expo": "^23.0.4",
+    "geolib": "^2.0.24",
     "ios-sim": "^6.1.2",
     "proptypes": "^1.1.0",
     "react": "16.2.0",

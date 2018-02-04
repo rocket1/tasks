@@ -9,6 +9,8 @@ export const GEO_OPTIONS = {
 export const LAT_RANGE = .0001;
 export const LNG_RANGE = .00015;
 
+export const CIRCLE_RADIUS = 15; // in meters
+
 export const TASK_DESC_MAP = {
     ORDERED: "To complete this task, visit all the places in order.",
     UNORDERED: "To complete this task, visit all the places in no particular order."
@@ -20,5 +22,5 @@ export const DEBUG_HOME_COORDS = {
     'longitude': -122.584855
 };
 
-export const LAT_DELTA = .0001;
-export const LNG_DELTA = .0001;
+export const LAT_DELTA = .001;
+export const LNG_DELTA = .001;

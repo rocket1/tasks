@@ -1,6 +1,9 @@
 import {TASK_T_ORDERED, TASK_T_UNORDERED} from "./task";
 import LocationService from "../location-service/location-service";
 import {COMPLETE_STEP_STATE, INCOMPLETE_STEP_STATE} from "./step-state";
+import {CIRCLE_MARKER_T, POLYGON_MARKER_T} from "../location-service/marker-types";
+import {CIRCLE_RADIUS} from "../common/constants";
+import geolib from 'geolib';
 
 class TaskEvaluator {
 
@@ -69,9 +72,24 @@ class TaskEvaluator {
      * @private
      */
     _markCompleteIfInRange(step, coord) {
-        if (this._withinRange(step.marker.coordinate, coord)) {
+
+        let rangeFunc;
+
+        switch (step.marker.markerType) {
+            case POLYGON_MARKER_T:
+                rangeFunc = this._withinRangePolygon;
+                break;
+            case CIRCLE_MARKER_T:
+                rangeFunc = this._withinRangeCircle;
+                break;
+            default:
+                throw new Error('Marker type not found.');
+        }
+
+        if (rangeFunc(step.marker.coordinate, coord)) {
             step.stepState = COMPLETE_STEP_STATE;
         }
+
         return step;
     }
 
@@ -82,7 +100,7 @@ class TaskEvaluator {
      * @returns {boolean}
      * @private
      */
-    _withinRange(stepCoord, coord) {
+    _withinRangePolygon(stepCoord, coord) {
 
         const {latMin, lngMin, latMax, lngMax} = (new LocationService).getPolygonBounds(stepCoord);
 
@@ -91,6 +109,21 @@ class TaskEvaluator {
 
         // TODO: Look at how this is affected by North versus South hemisphere :(
         return (cLat >= latMin) && (cLat <= latMax) && (cLng >= lngMin) && (cLng <= lngMax);
+    }
+
+    /**
+     *
+     * @param stepCoord
+     * @param coord
+     * @returns {boolean}
+     * @private
+     */
+    _withinRangeCircle(stepCoord, coord) {
+        return geolib.isPointInCircle(
+            stepCoord,
+            coord,
+            CIRCLE_RADIUS
+        );
     }
 }
 

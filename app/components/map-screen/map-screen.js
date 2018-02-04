@@ -6,7 +6,7 @@ import StepList from './step-list';
 import LocationService from '../location-service/location-service';
 import styles from './map-screen-styles';
 import TaskEvaluator from "../task/task-evaluator";
-import {DEBUG_HOME_COORDS, TASK_DESC_MAP} from "../common/constants";
+import {CIRCLE_RADIUS, DEBUG_HOME_COORDS, TASK_DESC_MAP} from "../common/constants";
 import {loadTask} from "../../redux/actions";
 import {INCOMPLETE_STEP_STATE} from "../task/step-state";
 
@@ -239,9 +239,23 @@ class ConnectedMapScreen extends React.Component {
                 )
             );
 
+            const circles = this.state.markers.map((marker, index) => {
+                return (
+                    <MapView.Circle key={index}
+                                    center={marker.coordinate}
+                                    radius={CIRCLE_RADIUS}
+                                    fillColor={marker.pinColor}
+                                    strokeColor={marker.pinColor}
+                                    style={{opacity: .5}}
+                                    strokeWidth={2}
+                    />
+                );
+            });
+
             const taskHdr = this._taskComplete() ? <View style={styles.taskHeaderSuccess}><Text
-                style={styles.taskHeaderTitleSuccess}>Task Complete.</Text></View> : <View style={styles.taskHeader}><Text
-                style={styles.taskHeaderTitle}>{TASK_DESC_MAP[this.props.loadedTask.taskType]}</Text></View>;
+                                                     style={styles.taskHeaderTitleSuccess}>Task Complete.</Text></View> :
+                            <View style={styles.taskHeader}><Text
+                                style={styles.taskHeaderTitle}>{TASK_DESC_MAP[this.props.loadedTask.taskType]}</Text></View>;
 
             return (
                 <View style={styles.container}>
@@ -259,7 +273,9 @@ class ConnectedMapScreen extends React.Component {
                         onRegionChangeComplete={this._onRegionChangeComplete}
                         onMapReady={this._onMapReady}>
 
-                        {polyGons}
+                        {/*{polyGons}*/}
+
+                        {circles}
 
                         {myMarker}
 
