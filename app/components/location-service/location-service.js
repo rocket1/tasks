@@ -1,6 +1,7 @@
 import {Platform} from 'react-native';
 import {Constants, Location, Permissions} from 'expo';
 import {DEBUG_HOME_COORDS, GEO_OPTIONS, LAT_DELTA, LAT_RANGE, LNG_DELTA, LNG_RANGE} from "../common/constants";
+import geolib from 'geolib';
 
 class LocationService {
 
@@ -54,6 +55,30 @@ class LocationService {
 
     /**
      *
+     * @param coords
+     * @returns {{latitude: number, longitude: number, latitudeDelta: number, longitudeDelta: number}}
+     */
+    getRegion(coords) {
+
+        const bounds = this.getBounds(coords);
+        const center = geolib.getCenter(coords);
+        const latDelta = bounds.maxLat - bounds.minLat;
+        const lngDelta = bounds.maxLng - bounds.minLng;
+        const latFudge = latDelta * 1.1;
+        const lngFudge = lngDelta * 1.2;
+
+        const region = {
+            latitude: Number.parseFloat(center.latitude),
+            longitude: Number.parseFloat(center.longitude),
+            latitudeDelta: latDelta + latFudge,
+            longitudeDelta: lngDelta + lngFudge
+        };
+
+        return region;
+    }
+
+    /**
+     *
      * @param coord
      * @returns {{latMin: number, lngMin: number, latMax: *, lngMax: *}}
      */
@@ -97,6 +122,14 @@ class LocationService {
                 longitude: lngMax,
             },
         ]
+    }
+
+    /**
+     *
+     * @param coordArray
+     */
+    getBounds(coordArray) {
+        return geolib.getBounds(coordArray);
     }
 
     /**
