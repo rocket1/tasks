@@ -11,9 +11,11 @@
       "steps": [
         {
           "id": "1",
+          "stepState": "INCOMPLETE",
           "marker": {
             "title": "Bottom of Mt. Tabor Stairs",
-            "pinColor": "#ff0000",
+            "markerType": "CIRCLE",
+            "pinColor": "rgba(255, 0, 255, .5)",
             "taskId": "1",
             "coordinate": {
               "latitude": 45.515521,
@@ -23,9 +25,11 @@
         },
         {
           "id": "2",
+          "stepState": "INCOMPLETE",
           "marker": {
             "title": "Top of Mt. Tabor Stairs",
-            "pinColor": "#00ff00",
+            "markerType": "CIRCLE",
+            "pinColor": "rgba(0, 0, 255, .5)",
             "taskId": "1",
             "coordinate": {
               "latitude": 45.513295,
@@ -35,9 +39,11 @@
         },
         {
           "id": "3",
+          "stepState": "INCOMPLETE",
           "marker": {
             "title": "Far side of Mt. Tabor track",
-            "pinColor": "#0000ff",
+            "markerType": "CIRCLE",
+            "pinColor": "rgba(255, 0, 0, .5)",
             "taskId": "1",
             "coordinate": {
               "latitude": 45.511461,
@@ -113,15 +119,79 @@
     {
       "id": "3",
       "title": "Walk to end of street (UNORDERED)",
-      "taskType": "ORDERED",
+      "taskType": "UNORDERED",
       "steps": [
         {
           "id": "1",
           "stepState": "INCOMPLETE",
           "marker": {
+            "title": "Walk to 76th and Burnside",
+            "markerType": "CIRCLE",
+            "pinColor": "rgba(255, 0, 0, .5)",
+            "taskId": "2",
+            "coordinate": {
+              "latitude": 45.522891,
+              "longitude": -122.584835
+            }
+          }
+        },
+        {
+          "id": "2",
+          "stepState": "INCOMPLETE",
+          "marker": {
             "title": "Walk to 75th and Burnside",
-            "pinColor": "#ff0000",
-            "taskId": "3",
+            "markerType": "CIRCLE",
+            "pinColor": "rgba(0, 255, 0, .5)",
+            "taskId": "2",
+            "coordinate": {
+              "latitude": 45.522916,
+              "longitude": -122.585769
+            }
+          }
+        },
+        {
+          "id": "3",
+          "stepState": "INCOMPLETE",
+          "marker": {
+            "title": "Walk to 75th and Everett",
+            "markerType": "CIRCLE",
+            "pinColor": "rgba(0, 0, 255, .5)",
+            "taskId": "2",
+            "coordinate": {
+              "latitude": 45.524583,
+              "longitude": -122.585784
+            }
+          }
+        },
+        {
+          "id": "4",
+          "stepState": "INCOMPLETE",
+          "marker": {
+            "title": "Walk Home",
+            "markerType": "CIRCLE",
+            "pinColor": "rgba(255, 0, 255, .5)",
+            "taskId": "2",
+            "coordinate": {
+              "latitude": 45.523319,
+              "longitude": -122.584922
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "title": "Walk to end of street (ORDERED)",
+      "taskType": "ORDERED",
+      "steps": [
+        {
+          "id": "2",
+          "stepState": "INCOMPLETE",
+          "marker": {
+            "title": "Walk to 75th and Burnside",
+            "markerType": "CIRCLE",
+            "pinColor": "rgba(0, 255, 0, .5)",
+            "taskId": "2",
             "coordinate": {
               "latitude": 45.522916,
               "longitude": -122.585769
@@ -131,12 +201,25 @@
       ]
     },
     {
-      "id": "4",
-      "title": "Task 4"
-    },
-    {
       "id": "5",
-      "title": "Task 5"
+      "title": "Walk to end of street (UNORDERED)",
+      "taskType": "UNORDERED",
+      "steps": [
+        {
+          "id": "2",
+          "stepState": "INCOMPLETE",
+          "marker": {
+            "title": "Walk to 75th and Burnside",
+            "markerType": "CIRCLE",
+            "pinColor": "rgba(0, 255, 0, .5)",
+            "taskId": "2",
+            "coordinate": {
+              "latitude": 45.522916,
+              "longitude": -122.585769
+            }
+          }
+        }
+      ]
     },
     {
       "id": "6",
