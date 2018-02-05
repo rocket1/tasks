@@ -27,7 +27,6 @@ class TaskList extends React.Component {
         return (
             <FlatList
                 data={this.props.tasks}
-                extraData={this.props}
                 keyExtractor={this._keyExtractor}
                 renderItem={this._renderItem}
             />

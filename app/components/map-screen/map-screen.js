@@ -7,7 +7,7 @@ import LocationService from '../location-service/location-service';
 import styles from './map-screen-styles';
 import TaskEvaluator from "../task/task-evaluator";
 import {CIRCLE_RADIUS, DEBUG_HOME_COORDS, TASK_DESC_MAP} from "../common/constants";
-import {loadTask} from "../../redux/actions";
+import {loadTask, saveTask} from "../../redux/actions";
 import {INCOMPLETE_STEP_STATE} from "../task/step-state";
 
 class ConnectedMapScreen extends React.Component {
@@ -145,6 +145,7 @@ class ConnectedMapScreen extends React.Component {
     _evalTaskAgainstMyMarker(myMarker) {
         const evalTask = this._taskEvaluator.evaluateMarker({...this.props.loadedTask}, myMarker);
         this.props.loadTask({...evalTask});
+        this.props.saveTask({...evalTask});
     }
 
     /**
@@ -325,7 +326,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        loadTask: task => dispatch(loadTask(task))
+        loadTask: task => dispatch(loadTask(task)),
+        saveTask: task => dispatch(saveTask(task)),
     };
 };
 

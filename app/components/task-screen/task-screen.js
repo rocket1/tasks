@@ -4,6 +4,7 @@ import TaskList from '../task-list/task-list';
 import {connect} from 'react-redux';
 import {loadTask} from '../../redux/actions';
 import {BG_COLOR} from '../common/styles-common';
+import {COMPLETE_TASK_STATE} from "../task/task-state";
 
 class ConnectedTaskScreen extends React.Component {
 
@@ -21,8 +22,10 @@ class ConnectedTaskScreen extends React.Component {
      * @private
      */
     _onSelectTask = (task) => {
-        this.props.loadTask(task);
-        this.props.navigation.navigate('Map', {title: task.title});
+        if (task.taskState !== COMPLETE_TASK_STATE) {
+            this.props.loadTask(task);
+            this.props.navigation.navigate('Map', {title: task.title});
+        }
     };
 
     /**
@@ -32,7 +35,6 @@ class ConnectedTaskScreen extends React.Component {
     render() {
 
         console.log(this.props.tasks);
-
 
         return (
             <View style={styles.container}>
