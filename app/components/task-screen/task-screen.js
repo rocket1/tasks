@@ -34,8 +34,6 @@ class ConnectedTaskScreen extends React.Component {
      */
     render() {
 
-        console.log(this.props.tasks);
-
         return (
             <View style={styles.container}>
                 <TaskList onSelectTask={this._onSelectTask} tasks={this.props.tasks}/>
