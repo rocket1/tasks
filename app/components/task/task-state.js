@@ -1,0 +1,2 @@
+export const INCOMPLETE_TASK_STATE = 'INCOMPLETE';
+export const COMPLETE_TASK_STATE = 'COMPLETE';

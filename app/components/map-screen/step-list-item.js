@@ -74,7 +74,6 @@ class StepListItem extends React.Component {
                         {checkMark}
                     </View>
 
-
                 </View>
             </TouchableOpacity>
         );

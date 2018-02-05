@@ -4,8 +4,17 @@ import {COMPLETE_STEP_STATE, INCOMPLETE_STEP_STATE} from "./step-state";
 import {CIRCLE_MARKER_T, POLYGON_MARKER_T} from "../location-service/marker-types";
 import {CIRCLE_RADIUS} from "../common/constants";
 import geolib from 'geolib';
+import {COMPLETE_TASK_STATE} from "./task-state";
 
 class TaskEvaluator {
+
+    /**
+     *
+     * @private
+     */
+    _taskComplete(task) {
+        return task.steps.find(step => step.stepState === INCOMPLETE_STEP_STATE) === undefined;
+    }
 
     /**
      *
@@ -27,6 +36,11 @@ class TaskEvaluator {
         }
 
         newTask.steps = newSteps;
+
+        if (this._taskComplete(newTask)) {
+            newTask.taskState = COMPLETE_TASK_STATE;
+        }
+
         return newTask;
     }
 

@@ -2,7 +2,7 @@ import React from 'react';
 import {FlatList} from 'react-native';
 import TaskListItem from './task-list-item';
 
-class TaskList extends React.PureComponent {
+class TaskList extends React.Component {
 
     /**
      *
@@ -27,7 +27,7 @@ class TaskList extends React.PureComponent {
         return (
             <FlatList
                 data={this.props.tasks}
-                extraData={this.state}
+                extraData={this.props}
                 keyExtractor={this._keyExtractor}
                 renderItem={this._renderItem}
             />
