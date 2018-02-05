@@ -5,7 +5,6 @@ import {
     LIST_ITEM_HEIGHT, LIST_ITEM_BG_COLOR, PAD_UNIT, TEXT_COLOR_2_DISABLED,
     TEXT_COLOR_2, LIST_ITEM_BG_COLOR_DISABLED
 } from '../common/styles-common';
-import {COMPLETE_STEP_STATE} from "../task/step-state";
 import {COMPLETE_TASK_STATE} from "../task/task-state";
 
 class TaskListItem extends React.Component {
