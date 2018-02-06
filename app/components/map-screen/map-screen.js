@@ -9,6 +9,7 @@ import TaskEvaluator from "../task/task-evaluator";
 import {CIRCLE_RADIUS, DEBUG_HOME_COORDS, TASK_DESC_MAP} from "../common/constants";
 import {loadTask, saveTask} from "../../redux/actions";
 import {INCOMPLETE_STEP_STATE} from "../task/step-state";
+import myMarkerImg from './my-marker.png'
 
 class ConnectedMapScreen extends React.Component {
 
@@ -233,6 +234,7 @@ class ConnectedMapScreen extends React.Component {
         if (this.props.initRegion) {
 
             const myMarker = this.state.myMarker ? <MapView.Marker
+                // image={myMarkerImg}
                 draggable
                 onDragEnd={this._handleMyMarkerOnDragEnd}
                 coordinate={this.state.myMarker.coordinate}

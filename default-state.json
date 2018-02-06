@@ -57,7 +57,7 @@
     {
       "id": "2",
       "taskState": "INCOMPLETE",
-      "title": "Walk to end of street (ORDERED)",
+      "title": "Walk around the block",
       "taskType": "ORDERED",
       "steps": [
         {
@@ -121,7 +121,7 @@
     {
       "id": "3",
       "taskState": "INCOMPLETE",
-      "title": "Walk to end of street (UNORDERED)",
+      "title": "Walk around the block (unordered)",
       "taskType": "UNORDERED",
       "steps": [
         {
@@ -185,42 +185,20 @@
     {
       "id": "4",
       "taskState": "INCOMPLETE",
-      "title": "Walk to end of street (ORDERED)",
-      "taskType": "ORDERED",
-      "steps": [
-        {
-          "id": "2",
-          "stepState": "INCOMPLETE",
-          "marker": {
-            "title": "Walk to 75th and Burnside",
-            "markerType": "CIRCLE",
-            "pinColor": "rgba(0, 255, 0, .5)",
-            "taskId": "2",
-            "coordinate": {
-              "latitude": 45.522916,
-              "longitude": -122.585769
-            }
-          }
-        }
-      ]
-    },
-    {
-      "id": "5",
-      "taskState": "INCOMPLETE",
-      "title": "Walk to end of street (UNORDERED)",
+      "title": "Beacon Rock",
       "taskType": "UNORDERED",
       "steps": [
         {
-          "id": "2",
+          "id": "1",
           "stepState": "INCOMPLETE",
           "marker": {
-            "title": "Walk to 75th and Burnside",
+            "title": "Climb to the top of Beacon Rock",
             "markerType": "CIRCLE",
-            "pinColor": "rgba(0, 255, 0, .5)",
+            "pinColor": "rgba(255, 0, 0, .5)",
             "taskId": "2",
             "coordinate": {
-              "latitude": 45.522916,
-              "longitude": -122.585769
+              "latitude": 45.627872,
+              "longitude": -122.021088
             }
           }
         }
