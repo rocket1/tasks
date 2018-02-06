@@ -264,10 +264,13 @@ class ConnectedMapScreen extends React.Component {
                 );
             });
 
-            const taskHdr = this._taskComplete() ? <View style={styles.taskHeaderSuccess}><Text
-                                                     style={styles.taskHeaderTitleSuccess}>Task Complete.</Text></View> :
-                            <View style={styles.taskHeader}><Text
-                                style={styles.taskHeaderTitle}>{TASK_DESC_MAP[this.props.loadedTask.taskType]}</Text></View>;
+            const completeHdr = <View style={styles.taskHeaderSuccess}><Text
+                style={styles.taskHeaderTitleSuccess}>Task Complete.</Text></View>;
+
+            const descHdr = <View style={styles.taskHeader}><Text
+                style={styles.taskHeaderTitle}>{TASK_DESC_MAP[this.props.loadedTask.taskType]}</Text></View>;
+
+            const taskHdr = this._taskComplete() ? completeHdr : descHdr;
 
             return (
                 <View style={styles.container}>
@@ -280,7 +283,6 @@ class ConnectedMapScreen extends React.Component {
                         style={styles.map}
                         region={this.state.region}
                         initRegion={this.props.initRegion}
-                        zoomControlEnabled={true}
                         onRegionChange={this._setRegion}
                         onRegionChangeComplete={this._onRegionChangeComplete}
                         onMapReady={this._onMapReady}>
