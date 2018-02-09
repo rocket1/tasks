@@ -13,13 +13,8 @@ export const CIRCLE_RADIUS = 15; // in meters
 
 export const TASK_DESC_MAP = {
     ORDERED: "To complete this task, visit all the places in order.",
-    UNORDERED: "To complete this task, visit all the places in no particular order."
-};
-
-// D E B U G
-export const DEBUG_HOME_COORDS = {
-    'latitude': 45.522924,
-    'longitude': -122.584855
+    UNORDERED: "To complete this task, visit all the places in no particular order.",
+    VISIT: "To complete this task, visit the location."
 };
 
 export const LAT_DELTA = .001;

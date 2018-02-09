@@ -185,6 +185,28 @@
     {
       "id": "4",
       "taskState": "INCOMPLETE",
+      "title": "Walk down the street",
+      "taskType": "VISIT",
+      "steps": [
+        {
+          "id": "1",
+          "stepState": "INCOMPLETE",
+          "marker": {
+            "title": "Walk to 75th and Burnside",
+            "markerType": "CIRCLE",
+            "pinColor": "rgba(0, 255, 0, .5)",
+            "taskId": "2",
+            "coordinate": {
+              "latitude": 45.522916,
+              "longitude": -122.585769
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "taskState": "INCOMPLETE",
       "title": "Beacon Rock",
       "taskType": "UNORDERED",
       "steps": [

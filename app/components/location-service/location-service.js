@@ -39,10 +39,6 @@ class LocationService {
 
         this._getCoords((coords) => {
 
-            if (coords.latitude < 40) {
-                coords = DEBUG_HOME_COORDS;
-            }
-
             const currRegion = {
                 ...coords,
                 latitudeDelta: LAT_DELTA,
@@ -146,10 +142,6 @@ class LocationService {
                 latitude: location.coords.latitude,
                 longitude: location.coords.longitude
             };
-
-            if (latLng.latitude < 40) {
-                latLng = DEBUG_HOME_COORDS;
-            }
 
             this._currentLatLng = latLng;
             callback(latLng);

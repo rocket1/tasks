@@ -1,4 +1,4 @@
-import {TASK_T_ORDERED, TASK_T_UNORDERED} from "./task";
+import {ORDERED_TASK_T, UNORDERED_TASK_T, VISIT_TASK_T} from "./task-types";
 import LocationService from "../location-service/location-service";
 import {COMPLETE_STEP_STATE, INCOMPLETE_STEP_STATE} from "./step-state";
 import {CIRCLE_MARKER_T, POLYGON_MARKER_T} from "../location-service/marker-types";
@@ -28,10 +28,10 @@ class TaskEvaluator {
         let newSteps = newTask.steps;
         const coord = marker.coordinate;
 
-        if (newTask.taskType === TASK_T_ORDERED) {
+        if (newTask.taskType === ORDERED_TASK_T) {
             newSteps = this._handleOrdered(newSteps, coord);
         }
-        else if (newTask.taskType === TASK_T_UNORDERED) {
+        else if (newTask.taskType === UNORDERED_TASK_T || newTask.taskType === VISIT_TASK_T) {
             newSteps = this._handleUnordered(newSteps, coord);
         }
 

@@ -267,7 +267,7 @@ class ConnectedMapScreen extends React.Component {
             });
 
             const completeHdr = <View style={styles.taskHeaderSuccess}><Text
-                style={styles.taskHeaderTitleSuccess}>Task Complete.</Text></View>;
+                style={styles.taskHeaderTitleSuccess}>Task Complete. <Text style={styles.em}>5&cent;</Text> unlocked for charity <Text style={styles.em}>Habitat for Humanity.</Text></Text></View>;
 
             const descHdr = <View style={styles.taskHeader}><Text
                 style={styles.taskHeaderTitle}>{TASK_DESC_MAP[this.props.loadedTask.taskType]}</Text></View>;

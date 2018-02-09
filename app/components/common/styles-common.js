@@ -13,4 +13,5 @@ export const LIST_HEADER_TEXT_COLOR = TEXT_COLOR_2;
 export const LIST_HEADER_BG_COLOR = '#98ddc5';
 export const LIST_HEADER_BG_COLOR_SUCCESS = '#dd7200';
 export const LIST_HEADER_COLOR_SUCCESS = '#E0ECEF';
+export const STYLE_FONT_WEIGHT_BOLD = '800';
 
