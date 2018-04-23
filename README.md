@@ -1,3 +1,15 @@
+
+See frinchaboy.com "ritual" for screenshots.
+
+'Tasks' (aka Ritual) is a proof of concept React Native app that acts as a combination motivation game to complete physical tasks out in the real workld (like particular hikes or walks).  Upon completing tasks, money is unlocked that donates to charities.  That in effect is the motivation... by getting off your but and completing your tasks you are giving money (that has been pooled through normal chartiy donations) to charities of your choice.
+
+This proof of concept goes as far as using geo location to folow you around and show your location on a map, shows target locations (pins) you must visit in order (or unordered), and inidicated when steps and ultimately tasks are complete.
+
+
+
+------------------------
+ORIGINAL README:
+
 This project was bootstrapped with [Create React Native App](https://github.com/react-community/create-react-native-app).
 
 Below you'll find information about performing common tasks. The most recent version of this guide is available [here](https://github.com/react-community/create-react-native-app/blob/master/react-native-scripts/template/README.md).
